@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why I Built DuplicateFinder Pro — Almaze</title>
+<meta name="description" content="The origin story behind DuplicateFinder Pro — built by a working event photographer after one too many eight-camera shoot days.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--ice);
+    outline-offset:3px;
+  }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  /* ── Nav ──────────────────────────────────────────────────── */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  /* ── Article ──────────────────────────────────────────────── */
+  .article-head{ padding:88px 0 50px; text-align:center; }
+  .article-head p.eyebrow{ margin-bottom:16px; }
+  .article-head h1{
+    font-size:clamp(2rem, 4.6vw, 2.9rem);
+    max-width:680px; margin:0 auto; line-height:1.18;
+  }
+
+  .article-body{ padding-bottom:100px; }
+  .prose{ max-width:640px; margin:0 auto; font-size:1.06rem; }
+  .prose p{ margin:0 0 26px; color:#D7D9DC; }
+  .prose strong{ color:var(--gold-soft); font-weight:600; }
+  .prose em{ font-style:italic; }
+  .prose .lead{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-size:1.4rem; color:var(--gold-soft); margin-bottom:34px; line-height:1.4;
+  }
+  .prose .beat{
+    font-family:'Fraunces', serif; font-style:italic;
+    color:var(--ink); font-size:1.15rem; margin:0 0 26px;
+  }
+  hr.rule{ border:none; border-top:1px solid var(--line); margin:48px 0; }
+
+  .quickstart{
+    max-width:640px; margin:0 auto; background:var(--bg-panel);
+    border:1px solid var(--line); border-radius:6px; padding:34px 36px;
+  }
+  .quickstart p.eyebrow{ margin-bottom:14px; }
+  .quickstart ol{ margin:0; padding-left:22px; color:#D7D9DC; }
+  .quickstart li{ margin-bottom:12px; }
+  .quickstart li:last-child{ margin-bottom:0; }
+
+  .back-cta{ text-align:center; margin-top:60px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  footer{ padding:50px 0 44px; border-top:1px solid var(--line); }
+  .foot-bottom{
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="index.html#facets">Tools</a>
+      <a href="index.html#story">Story</a>
+      <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Help</a>
+    </div>
+  </div>
+</nav>
+
+<header class="article-head wrap">
+  <p class="eyebrow">The story behind Facet 01</p>
+  <h1>Why I Built DuplicateFinder Pro</h1>
+</header>
+
+<article class="article-body wrap">
+  <div class="prose">
+    <p class="lead">I didn't set out to build software. I set out to shoot a graduation.</p>
+
+    <p>Even with just one camera, the same small annoyance shows up on every
+    shoot: a RAW file sitting right next to the JPG preview the camera
+    generated for it, both looking like separate files worth keeping, both
+    quietly eating space for no reason. It's easy to ignore when it's one
+    folder. It stops being ignorable the moment you're not working with one
+    camera anymore.</p>
+
+    <p>Eight cameras. Ten hours. A Canon R5C running Cinema 4K at the anchor
+    position, a FujiFilm 100S working a second angle, GoPros scattered across
+    the room catching what the primary cameras couldn't reach. By the time
+    the last GoPro came off its mount, I had footage and photos scattered
+    across half a dozen memory cards, each camera with its own file-naming
+    convention, its own frame rate, its own idea of what "organized" means.</p>
+
+    <p>That night — and every event after it — the same ritual played out:
+    dump everything onto the drive, then spend hours by hand figuring out
+    what was actually a duplicate and what only looked like one. A RAW file
+    and its camera-generated JPG preview, sitting in the same folder, doing
+    nothing but taking up space. A backup copy of a camera dump, quietly
+    duplicated into the named event folder after I'd already organized it.
+    The same photo, exported twice at different quality settings, now living
+    in two different folders with two different filenames, invisible to any
+    tool that only compares names.</p>
+
+    <p class="beat">That's the point where DuplicateFinder Pro actually
+    started — not as a product, just as a script I wrote so I'd never have
+    to do that by hand again. It didn't work. Not at first.</p>
+
+    <p>I tried the obvious fix first — match files by filename. It was
+    worse than doing nothing. On one real event folder, a filename-only
+    approach produced <strong>349 false positives</strong> — files it called
+    duplicates that weren't duplicates at all, just similarly-named shots
+    from different moments in the ceremony. Deleting on that basis would
+    have meant losing irreplaceable footage of someone's baptism because two
+    files happened to share a naming pattern.</p>
+
+    <p>That failure is what actually taught me what the problem was.
+    Filenames lie. Content doesn't. So I rebuilt it around
+    <strong>perceptual hashing</strong> — comparing what's actually
+    <em>in</em> the image, not what it's called — so a RAW file and its
+    edited JPG export could be matched correctly even sitting in two
+    completely different folders, renamed, re-compressed, re-organized. The
+    same principle extended to video: exact-content matching that, on one
+    real test folder, correctly identified <strong>25.5 GB of genuine
+    duplicate footage</strong> — camera dumps that had already been safely
+    backed up into a named event folder, sitting there doing nothing but
+    eating storage.</p>
+
+    <p>Because this had to work on real professional archives — some over
+    25TB, scans running for hours — it couldn't just be fast. It had to be
+    safe. A scan that crashes four hours in, on a drive that size, is worse
+    than useless. So the engine checkpoints itself at every phase boundary,
+    caching hashes as it goes, so a paused or interrupted scan picks back up
+    instead of starting over. And nothing gets deleted outright — flagged
+    files move to a 24-hour quarantine first, with a full restore path,
+    because the cost of a wrongly deleted family photo is not a cost any
+    tool should ask a photographer to risk.</p>
+
+    <p>I'm a working event photographer first — I shoot weddings, baptisms,
+    graduations, and church services, where a single service can run four
+    hours and involve every camera I own running simultaneously. I'm also a
+    developer. DuplicateFinder Pro exists because I got tired of losing
+    evenings to a problem every event shooter runs into — and one no
+    generic "duplicate finder" app actually understood — because none of
+    them were built by someone who'd actually stood in that room, at hour
+    six, watching the card fill up.</p>
+
+    <p>If you shoot events with one or more cameras, this was built for
+    exactly your kind of chaos.</p>
+  </div>
+
+  <hr class="rule">
+
+  <div class="quickstart">
+    <p class="eyebrow">Quick start</p>
+    <ol>
+      <li>Point DuplicateFinder Pro at your event folder (or your whole
+          drive).</li>
+      <li>Hit Start Scan — it walks the folder tree once, checkpointing as
+          it goes.</li>
+      <li>Review each tab: RAW+JPG matches, duplicate JPGs/RAWs/videos, and
+          folder-level camera-dump duplicates are all separated out, not
+          lumped together.</li>
+      <li>Flag what you don't need, move it to Quarantine, review for 24
+          hours, then delete for good — or restore it if you change your
+          mind.</li>
+    </ol>
+  </div>
+
+  <div class="back-cta">
+    <a class="btn btn-gold" href="index.html#facets">Get DuplicateFinder Pro →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <a href="index.html" class="btn-ghost" style="text-decoration:none; color:var(--ink-dim);">← Back to Almaze home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

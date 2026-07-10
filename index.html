@@ -1,8 +1,314 @@
 <!DOCTYPE html>
-<html>
-<head><title>Almaze</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Almaze — Software cut from real work</title>
+<meta name="description" content="Almaze is small, focused software built by a working photographer for the exact problems that show up on real shoot days.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--ice);
+    outline-offset:3px;
+  }
+
+  /* ── Layout shell ─────────────────────────────────────────── */
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:110px 0; }
+  @media (max-width:640px){ section{ padding:72px 0; } .wrap{ padding:0 20px; } }
+
+  /* ── Nav ──────────────────────────────────────────────────── */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero{ padding-top:96px; padding-bottom:70px; text-align:center; }
+  .gem-stage{ display:flex; justify-content:center; margin-bottom:44px; }
+  .gem{
+    position:relative;
+    width:190px; height:190px;
+  }
+  .facet-svg{ width:100%; height:100%; overflow:visible; }
+  .facet-svg polygon{
+    stroke:var(--line);
+    stroke-width:0.6;
+    transition:fill .3s;
+  }
+  .facet-svg .sweep{
+    mix-blend-mode:screen;
+    opacity:0;
+  }
+  @keyframes gemSweep{
+    0%   { opacity:0; transform:translateX(-40px); }
+    35%  { opacity:0.9; }
+    70%  { opacity:0; transform:translateX(40px); }
+    100% { opacity:0; }
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .facet-svg .sweep{ animation:gemSweep 2.6s ease-in-out 0.4s 1 forwards; }
+  }
+
+  .hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.4rem);
+    line-height:1.12;
+    max-width:760px;
+    margin:0 auto 22px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{ color:var(--gold-soft); font-style:italic; }
+  .hero p.lede{
+    max-width:520px; margin:0 auto 36px;
+    color:var(--ink-dim); font-size:1.05rem;
+  }
+  .cta-row{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+
+  /* ── Facets section ───────────────────────────────────────── */
+  .facets-head{ text-align:center; margin-bottom:56px; }
+  .facets-head h2{ font-size:2rem; margin-top:10px; }
+  .facets-head p{ color:var(--ink-dim); max-width:480px; margin:14px auto 0; }
+
+  .facet-card{
+    display:grid; grid-template-columns:120px 1fr auto;
+    gap:28px; align-items:center;
+    padding:30px; border:1px solid var(--line);
+    border-radius:4px; margin-bottom:18px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+  }
+  .facet-card.dim{ opacity:0.5; }
+  .facet-glyph{
+    width:100%; aspect-ratio:1;
+    clip-path:polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    background:linear-gradient(150deg, var(--gold-soft), var(--gold) 55%, #7A5D14);
+  }
+  .facet-card.dim .facet-glyph{
+    background:linear-gradient(150deg, #33383F, #22262C 55%, #14171B);
+  }
+  .facet-num{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--gold); letter-spacing:0.1em; }
+  .facet-card.dim .facet-num{ color:var(--ink-dim); }
+  .facet-body h3{ font-size:1.35rem; margin:6px 0 8px; }
+  .facet-body p{ color:var(--ink-dim); font-size:0.95rem; max-width:480px; margin:0 0 10px; }
+  .facet-meta{ font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--ink-dim); }
+  @media (max-width:700px){
+    .facet-card{ grid-template-columns:64px 1fr; }
+    .facet-card .btn{ grid-column:1 / -1; justify-self:start; }
+  }
+
+  /* ── Story teaser ─────────────────────────────────────────── */
+  .story{ background:var(--bg-panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .story .wrap{ text-align:center; max-width:700px; }
+  .story blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-size:clamp(1.5rem, 3.4vw, 2.1rem);
+    color:var(--gold-soft); margin:20px 0 26px; line-height:1.3;
+  }
+  .story p.sub{ color:var(--ink-dim); margin-bottom:26px; }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  footer{ padding:60px 0 48px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
+  .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .foot-col h4{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink); font-size:0.9rem; margin-bottom:9px; opacity:0.85; }
+  .foot-col a:hover{ opacity:1; color:var(--gold-soft); }
+  .foot-bottom{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+</style>
+</head>
 <body>
-<h1>Almaze</h1>
-<p>Software tools, coming soon.</p>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="#facets">Tools</a>
+      <a href="#story">Story</a>
+      <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Help</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="gem-stage">
+    <div class="gem" aria-hidden="true">
+      <svg class="facet-svg" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="sweepGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#E4C766" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#FFF3CE" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#E4C766" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <polygon points="50,4 78,26 68,50 32,50 22,26" fill="#7A5D14"/>
+        <polygon points="50,4 78,26 90,30 62,14" fill="#9C7A1B"/>
+        <polygon points="50,4 22,26 10,30 38,14" fill="#B08E22"/>
+        <polygon points="10,30 22,26 32,50 4,58" fill="#8A6B18"/>
+        <polygon points="90,30 78,26 68,50 96,58" fill="#6B5312"/>
+        <polygon points="32,50 68,50 60,80 40,80" fill="#C9A227"/>
+        <polygon points="4,58 32,50 40,80 20,86" fill="#A9861F"/>
+        <polygon points="96,58 68,50 60,80 80,86" fill="#8F701A"/>
+        <polygon points="20,86 40,80 50,96 34,94" fill="#5E4A10"/>
+        <polygon points="80,86 60,80 50,96 66,94" fill="#4E3D0D"/>
+        <polygon class="sweep" points="50,4 78,26 68,50 32,50 22,26 10,30 4,58 32,50 40,80 20,86 50,96 80,86 60,80 96,58 68,50 90,30" fill="url(#sweepGrad)"/>
+      </svg>
+    </div>
+  </div>
+
+  <p class="eyebrow">Amharic for diamond</p>
+  <h1>Software <em>cut</em> under the pressure<br>of a real shoot day.</h1>
+  <p class="lede">
+    Almaze is small, focused software built by a working event photographer —
+    for the exact problems that show up on real shoot days, not hypothetical ones.
+  </p>
+  <div class="cta-row">
+    <a class="btn btn-gold" href="#facets">See DuplicateFinder Pro</a>
+    <a class="btn btn-ghost" href="#story">Read the story</a>
+  </div>
+</header>
+
+<section id="facets">
+  <div class="wrap">
+    <div class="facets-head">
+      <p class="eyebrow">What's shipped so far</p>
+      <h2>The facets of Almaze</h2>
+      <p>Each tool is its own facet — cut, polished, and put to work on real files. More get added as real problems demand them.</p>
+    </div>
+
+    <div class="facet-card">
+      <div class="facet-glyph" aria-hidden="true"></div>
+      <div class="facet-body">
+        <p class="facet-num">FACET 01 — LIVE</p>
+        <h3>DuplicateFinder Pro</h3>
+        <p>Finds duplicate RAWs, JPGs, and videos across multi-camera event
+           footage — by content, not filename — with a 24-hour quarantine
+           before anything is ever deleted for good.</p>
+        <p class="facet-meta">v1.3 · Windows · RAW+JPG · Video · Folder-level dedup</p>
+      </div>
+      <a class="btn btn-gold" href="#" target="_blank" rel="noopener">Get it →</a>
+    </div>
+
+    <div class="facet-card dim">
+      <div class="facet-glyph" aria-hidden="true"></div>
+      <div class="facet-body">
+        <p class="facet-num">FACET 02 — UNCUT</p>
+        <h3>In progress</h3>
+        <p>The next facet gets cut when the next real production problem
+           demands it. Nothing speculative — same as the first one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <p class="eyebrow">Why it exists</p>
+    <blockquote>"Filenames lie. Content doesn't."</blockquote>
+    <p class="sub">
+      DuplicateFinder Pro started as a script written after one too many
+      eight-camera events ended with hours of manual sorting — and a first
+      attempt at fixing it that failed badly enough to teach us why the real
+      fix had to work by content, not by name.
+    </p>
+    <a class="btn btn-ghost" href="origin-story.html">Read the full story →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="wordmark" style="font-size:1.1rem;">ALMA<em>Z</em>E</p>
+        <p>Small-batch software, built by Primefotograf out of real production
+           work — not written speculatively.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Tools</h4>
+          <a href="#facets">DuplicateFinder Pro</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Suggest a feature</a>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=bug" target="_blank" rel="noopener">Report a bug</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="https://primefotograf.com" target="_blank" rel="noopener">Primefotograf</a>
+          <a href="https://instagram.com/primefotograf" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://github.com/Fellh/almaze-tools" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <span>Amharic for diamond.</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
