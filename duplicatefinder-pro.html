@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Duplicate Photos and Videos Across Two Drives — DuplicateFinder Pro</title>
+<meta name="description" content="Compare two folders — or two entire drives — and find the photos, RAW files and videos that are identical inside. By content, not filename. Windows.">
+<link rel="canonical" href="https://almaze.tools/duplicatefinder-pro.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Almaze">
+<meta property="og:url" content="https://almaze.tools/duplicatefinder-pro.html">
+<meta property="og:title" content="Find duplicate photos and videos across two drives">
+<meta property="og:description" content="Compare two folders — or two entire drives — and find the files that are byte-for-byte identical inside. Nothing is deleted: flagged files go to quarantine with a 24-hour hold and one-click restore.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Find duplicate photos and videos across two drives">
+<meta name="twitter:description" content="Compare two folders — or two entire drives — and find the files that are byte-for-byte identical inside. Nothing is deleted: flagged files go to quarantine with a 24-hour hold and one-click restore.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--ice);
+    outline-offset:3px;
+  }
+
+  /* ── Layout shell ─────────────────────────────────────────── */
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:110px 0; }
+  @media (max-width:640px){ section{ padding:72px 0; } .wrap{ padding:0 20px; } }
+
+  /* ── Nav ──────────────────────────────────────────────────── */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  /* ── Buttons ──────────────────────────────────────────────── */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  /* ── Footer ───────────────────────────────────────────────── */
+  footer{ padding:60px 0 48px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
+  .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .foot-col h4{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink); font-size:0.9rem; margin-bottom:9px; opacity:0.85; }
+  .foot-col a:hover{ opacity:1; color:var(--gold-soft); }
+  .foot-bottom{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  /* ── Shared panel vocabulary (matches download.html) ──────── */
+  .panel{
+    border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:36px;
+  }
+  .panel + .panel{ margin-top:18px; }
+  .panel h2{ font-size:1.6rem; margin-bottom:10px; }
+  .panel p.sub{ color:var(--ink-dim); max-width:62ch; margin:0 0 28px; }
+  .quiet{ color:var(--ink-dim); font-size:0.92rem; margin:0; }
+  .quiet code{ font-family:'IBM Plex Mono', monospace; font-size:0.86em; color:var(--ice); }
+  .cta-note{ color:var(--ink-dim); font-size:0.9rem; margin:18px 0 0; }
+
+  .specs{ display:flex; flex-wrap:wrap; margin-top:32px; border-top:1px solid var(--line); }
+  .spec{
+    flex:1 1 160px; padding:16px 20px;
+    border-bottom:1px solid var(--line); border-right:1px solid var(--line);
+  }
+  .spec:last-child{ border-right:none; }
+  .spec dt{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 6px;
+  }
+  .spec dd{ margin:0; font-size:0.95rem; }
+
+  /* ══ Product page only ════════════════════════════════════════
+     The hero states the problem before it states the product.
+     Someone arriving from a search has a folder full of files and
+     no idea whether it is safe to delete — that is the opening.
+     ═══════════════════════════════════════════════════════════ */
+  .pp-hero{ padding:80px 0 0; }
+  .pp-hero h1{
+    font-size:clamp(2.1rem, 5vw, 3.2rem);
+    line-height:1.1; letter-spacing:-0.01em;
+    margin:14px 0 20px; max-width:19ch;
+  }
+  .pp-hero h1 em{ color:var(--gold-soft); font-style:italic; }
+  .pp-hero p.lede{ color:var(--ink-dim); font-size:1.08rem; max-width:60ch; margin:0 0 30px; }
+  .pp-hero .cta-note{ margin-top:16px; }
+
+  /* Use cases — three real situations, not three feature nouns */
+  .cases{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .case{
+    border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:28px;
+  }
+  .case h3{ font-size:1.18rem; margin:10px 0 10px; }
+  .case p{ color:var(--ink-dim); font-size:0.94rem; margin:0; }
+  @media (max-width:820px){ .cases{ grid-template-columns:1fr; } }
+
+  /* ── The match ladder ─────────────────────────────────────────
+     The signature element. Three tests run in order, each more
+     expensive and more certain than the last, and a file only
+     survives to the next rung if it passed the one before.
+     Ice, not gold: on this site ice means verification.
+     ─────────────────────────────────────────────────────────── */
+  .ladder{ margin:0; padding:0; list-style:none; counter-reset:rung; }
+  .ladder li{
+    counter-increment:rung; position:relative;
+    border:1px solid var(--line); border-left:2px solid var(--ice);
+    border-radius:3px; background:var(--bg-base);
+    padding:20px 24px 20px 26px; margin-bottom:12px;
+  }
+  .ladder li:last-child{ margin-bottom:0; }
+  .rung-head{
+    display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .rung-n{
+    font-family:'IBM Plex Mono', monospace; font-size:0.66rem;
+    letter-spacing:0.12em; color:var(--ice);
+  }
+  .rung-head strong{ font-weight:600; font-size:1.02rem; }
+  .ladder p{ color:var(--ink-dim); font-size:0.94rem; margin:0; max-width:66ch; }
+  .verdict{
+    margin-top:14px; padding:16px 20px;
+    border:1px solid var(--ice); border-radius:3px;
+    background:rgba(191,230,242,0.04);
+    font-size:0.95rem;
+  }
+  .verdict strong{ color:var(--ice); }
+
+  /* ── Limits panel ─────────────────────────────────────────────
+     Deliberately not styled as a warning. These are facts about
+     the tool, set in the same type as everything else, because
+     hiding them would undercut the one claim the product makes.
+     ─────────────────────────────────────────────────────────── */
+  .limits{ margin:0; padding:0; list-style:none; }
+  .limits li{
+    padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .limits li:first-child{ padding-top:0; }
+  .limits li:last-child{ border-bottom:none; padding-bottom:0; }
+  .limits strong{ display:block; font-weight:600; margin-bottom:4px; }
+  .limits span{ color:var(--ink-dim); font-size:0.94rem; }
+
+  /* Format chips */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 8px; padding:0; list-style:none; }
+  .chips li{
+    font-family:'IBM Plex Mono', monospace; font-size:0.74rem;
+    letter-spacing:0.06em;
+    border:1px solid var(--line); border-radius:3px;
+    padding:6px 12px; color:var(--ink);
+  }
+  .fmt-row{ margin-bottom:26px; }
+  .fmt-row:last-child{ margin-bottom:0; }
+  .fmt-row h3{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+
+  /* FAQ */
+  .faq{ margin-top:18px; }
+  .faq h3{ font-size:1.1rem; margin:0 0 8px; }
+  .faq div{ padding:22px 0; border-bottom:1px solid var(--line); }
+  .faq div:last-child{ border-bottom:none; padding-bottom:0; }
+  .faq p{ color:var(--ink-dim); font-size:0.95rem; margin:0; max-width:70ch; }
+
+  /* Closing purchase block — gold leads here, and only here */
+  .buy{ border-color:var(--gold); }
+  .price{
+    font-family:'Fraunces', serif; font-size:2.4rem;
+    color:var(--gold-soft); line-height:1; margin:0 0 6px;
+  }
+  .price s{ color:var(--ink-dim); font-size:1.1rem; margin-left:10px; }
+
+  @media (max-width:640px){
+    .panel{ padding:24px; }
+    .case{ padding:22px; }
+    .spec{ flex-basis:100%; border-right:none; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+    .btn:hover{ transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="/#facets">Tools</a>
+      <a href="/origin-story.html">Story</a>
+      <a href="mailto:support@almaze.tools">Help</a>
+    </div>
+  </div>
+</nav>
+
+<header class="pp-hero wrap">
+  <p class="eyebrow">DuplicateFinder Pro · Windows</p>
+  <h1>The same photos are on <em>both</em> drives. Which ones?</h1>
+  <p class="lede">Point DuplicateFinder Pro at two folders — or two entire drives — and it tells you which files are genuinely identical inside, byte for byte, no matter what either folder is named or when it was copied. Then it moves the extra copies to quarantine, where you have 24 hours and one click to change your mind.</p>
+  <div class="cta-row">
+    <a class="btn btn-gold" href="https://almaze7.gumroad.com/l/duplicatefinder-pro/FOUNDING34" target="_blank" rel="noopener">Get DuplicateFinder Pro →</a>
+    <a class="btn btn-ghost" href="#how">How it decides</a>
+  </div>
+  <p class="cta-note">Free to scan and export a full report before you buy. A licence is only needed to move files.</p>
+</header>
+
+<section>
+  <div class="wrap">
+
+    <p class="eyebrow">What it's for</p>
+    <h2 style="font-size:2rem; margin:10px 0 40px;">Three situations it was built around</h2>
+
+    <div class="cases">
+      <div class="case">
+        <p class="eyebrow" style="color:var(--ink-dim);">Before you clear a card</p>
+        <h3>Confirming a camera dump landed</h3>
+        <p>You copied a shoot into an organised event folder — probably weeks ago, possibly twice. Add both folders and it reads them, so you find out whether every file made it before you erase the dump, instead of hoping.</p>
+      </div>
+      <div class="case">
+        <p class="eyebrow" style="color:var(--ink-dim);">Before you retire a drive</p>
+        <h3>Comparing two whole drives</h3>
+        <p>Add two drive roots and it compares across them. Identical files on both drives are reported with the copy you're keeping named explicitly, so consolidating an archive doesn't mean trusting your memory of what you moved where.</p>
+      </div>
+      <div class="case">
+        <p class="eyebrow" style="color:var(--ink-dim);">Inside one archive</p>
+        <h3>RAWs, exported JPGs and GoPro chapters</h3>
+        <p>It pairs a RAW with its exported JPG even when they sit in different folders, and matches video by content only — so the chapters of one long GoPro recording are never mistaken for copies of each other.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="how" style="padding-top:0;">
+  <div class="wrap">
+    <div class="panel">
+      <h2>How it decides two files are duplicates</h2>
+      <p class="sub">By reading them. Three tests run in order, cheapest first — a file only reaches the next test if it passed the one before, which is why a multi-terabyte scan finishes at all.</p>
+
+      <ol class="ladder">
+        <li>
+          <div class="rung-head"><span class="rung-n">TEST 01</span><strong>Size</strong></div>
+          <p>Files of different sizes cannot be identical, so they never get read. This is what removes almost everything.</p>
+        </li>
+        <li>
+          <div class="rung-head"><span class="rung-n">TEST 02</span><strong>Partial fingerprint</strong></div>
+          <p>The first and last megabyte of each surviving file are hashed. Two files that differ anywhere near their head or tail are separated here without reading the middle.</p>
+        </li>
+        <li>
+          <div class="rung-head"><span class="rung-n">TEST 03</span><strong>Full MD5 of the entire file</strong></div>
+          <p>Whatever is left is read end to end. Only a full-content match is reported as a duplicate — not a matching name, not a matching timestamp, not a matching size.</p>
+        </li>
+      </ol>
+
+      <div class="verdict">
+        <strong>One deliberate exception, and the app labels it.</strong> RAW files that share a filename but are <em>not</em> byte-identical are still grouped so you can see them side by side. Those rows read <code style="font-family:'IBM Plex Mono',monospace; color:var(--ice);">stem+size</code> in the Match column instead of <code style="font-family:'IBM Plex Mono',monospace; color:var(--ice);">md5</code>, and if their sizes differ by more than 5% they are marked <em>Review</em> rather than flagged for removal. Every row tells you which test found it.
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Nothing is deleted</h2>
+      <p class="sub">Flagged files are moved to a quarantine folder on the same drive, never erased. The 24-hour hold exists because the moment you regret a cleanup is usually the moment after it finishes.</p>
+
+      <ul class="limits">
+        <li>
+          <strong>Re-checked at the moment it moves</strong>
+          <span>On cross-folder and cross-drive matches, each flagged file is hashed against the copy you're keeping right as you click quarantine — not just when the scan ran. If a file changed in between, it is skipped and named.</span>
+        </li>
+        <li>
+          <strong>The safety net costs no disk space</strong>
+          <span>Quarantine moves files, it does not copy them — so holding them for 24 hours uses no additional space on your drive. The trade is the honest one: the space isn't reclaimed either until you permanently delete. You get the undo window for free, and choose when to cash in the space.</span>
+        </li>
+        <li>
+          <strong>Restore never guesses</strong>
+          <span>If a file's original location is on a drive that isn't connected, the app names that location, leaves the file safely in quarantine, and offers to continue with the rest. It will not redirect anything somewhere arbitrary.</span>
+        </li>
+        <li>
+          <strong>Nothing leaves quarantine until its copy has landed</strong>
+          <span>Each file is written in full first; the quarantine record clears only once the file is safely home. An interrupted restore cannot leave a half-written file in your archive.</span>
+        </li>
+        <li>
+          <strong>System and catalog working folders are never scanned</strong>
+          <span>Windows, Program Files, the Recycle Bin, Adobe Premiere Pro's working folders, and Lightroom's <code>.lrdata</code> and <code>.cache</code> directories are excluded outright. You can add your own exclusions and save them as reusable profiles.</span>
+        </li>
+        <li>
+          <strong>Permanent delete and restore are never locked</strong>
+          <span>Even without a licence, and even after a refund, you can always restore your own files or empty quarantine yourself. Your files are not held hostage by the software that moved them.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h2>What it doesn't do</h2>
+      <p class="sub">A duplicate finder is asking you to trust it with your archive. Here is where the tool stops, stated plainly, so nothing on this page is a surprise after you buy.</p>
+
+      <ul class="limits">
+        <li>
+          <strong>It doesn't read your Lightroom or Capture One catalog</strong>
+          <span>Lightroom's working folders are excluded from scanning, but the app has no knowledge of which photos are catalogued. If you quarantine a photo Lightroom has catalogued, Lightroom will show it as missing until you restore it — which takes one click, within the 24-hour hold or after. Catalog awareness is planned, not shipped.</span>
+        </li>
+        <li>
+          <strong>It doesn't guess which folder is the camera dump</strong>
+          <span>You add the folders to compare, in the order you want them ranked — the copy in the first-listed folder is the one kept. That's a deliberate reversal of an earlier version that tried to detect dump folders by naming convention and silently found nothing when your names didn't match its expectations.</span>
+        </li>
+        <li>
+          <strong>Cross-folder RAW+JPG pairing tolerates resizing, not heavy cropping</strong>
+          <span>Pairing a RAW with its exported JPG in a different folder uses a perceptual hash with an adjustable threshold, which handles resized and re-compressed exports well. A significantly cropped export may hash differently enough to be missed. Every other kind of duplicate detection in the app is full-content matching only.</span>
+        </li>
+        <li>
+          <strong>It only looks at photo, video and audio files</strong>
+          <span>RAW photos, exported JPGs, .MOV and .MP4 video, and GoPro .WAV audio. Documents, archives, installers and everything else on the drive are ignored, so this is not a general-purpose duplicate file cleaner — it is built for the one archive where a wrong deletion is unrecoverable.</span>
+        </li>
+        <li>
+          <strong>Windows only, and not code-signed yet</strong>
+          <span>Windows 10 and 11. There is no macOS or Linux build. The installer isn't code-signed, so Windows will call the publisher unknown — the <a href="/download.html" style="color:var(--ice);">download page</a> publishes the installer's SHA-256 fingerprint and walks through exactly what you'll see.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h2>What it handles</h2>
+      <p class="sub">Formats are matched by content, so anything listed here is compared the same way as everything else.</p>
+
+      <div class="fmt-row">
+        <h3>RAW photos</h3>
+        <ul class="chips">
+          <li>.RAF</li><li>.CR3</li><li>.CR2</li><li>.NEF</li><li>.ARW</li><li>.DNG</li>
+        </ul>
+      </div>
+      <div class="fmt-row">
+        <h3>Exported JPGs</h3>
+        <ul class="chips">
+          <li>.JPG</li><li>.JPEG</li>
+        </ul>
+      </div>
+      <div class="fmt-row">
+        <h3>Raw video</h3>
+        <ul class="chips">
+          <li>.MOV</li>
+        </ul>
+      </div>
+      <div class="fmt-row">
+        <h3>Rendered video</h3>
+        <ul class="chips">
+          <li>.MP4</li>
+        </ul>
+      </div>
+      <div class="fmt-row">
+        <h3>GoPro audio</h3>
+        <ul class="chips">
+          <li>.WAV</li>
+        </ul>
+        <p class="quiet" style="margin-top:10px;">Auto-flagged. GoPro writes a companion .WAV alongside footage it has already muxed; these are found and flagged without you asking.</p>
+      </div>
+      <p class="quiet" style="margin-top:22px;">Each category is a separate switch in the app, so you can scan RAWs alone on one pass and video alone on another — useful when a full pass over a multi-terabyte drive would run overnight.</p>
+
+      <dl class="specs">
+        <div class="spec"><dt>Version</dt><dd>1.5</dd></div>
+        <div class="spec"><dt>Runs on</dt><dd>Windows 10 / 11</dd></div>
+        <div class="spec"><dt>Licence</dt><dd>One-time purchase</dd></div>
+        <div class="spec"><dt>After activation</dt><dd>Works offline</dd></div>
+      </dl>
+    </div>
+
+    <div class="panel">
+      <h2>Built for archives that don't fit on one drive</h2>
+      <p class="sub">This was written to clean up a 25 TB photo and video archive spread across external drives, and the scanning behaviour follows from that.</p>
+
+      <ul class="limits">
+        <li>
+          <strong>Scans survive being interrupted</strong>
+          <span>Progress is checkpointed at phase boundaries. Pause a multi-hour scan and resume later: everything already finished stays finished, and only the phase you were in the middle of runs again.</span>
+        </li>
+        <li>
+          <strong>You can watch it work, in both directions</strong>
+          <span>Live per-file progress with running byte totals during both quarantine and restore, plus an up-front note that a greyed-out window means Windows is busy, not crashed. On a job this size, that distinction matters.</span>
+        </li>
+        <li>
+          <strong>The recoverable figure is arithmetic, not an estimate</strong>
+          <span>Move files out and back and the number returns to where it started. In a whole-library test, 236 files across 35 GB were quarantined and restored with every file exact to the byte, and the Storage Map agreed with the headline figure at every checkpoint.</span>
+        </li>
+        <li>
+          <strong>Same filename on three drives is handled</strong>
+          <span>Identical basenames from different drives get unique names in quarantine and each keeps its own recorded origin, so a multi-drive cleanup can be undone file by file without ambiguity.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel buy">
+      <p class="eyebrow">One-time purchase</p>
+      <p class="price">$34 <s>$49</s></p>
+      <p class="sub">Founding-user price. No subscription, no account, and no online check after the first activation — which matters if you work on location.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="https://almaze7.gumroad.com/l/duplicatefinder-pro/FOUNDING34" target="_blank" rel="noopener">Buy DuplicateFinder Pro →</a>
+        <a class="btn btn-ghost" href="/download.html">Verify the installer</a>
+      </div>
+      <p class="cta-note">Scanning, the Storage Map and the full CSV and HTML reports work without a licence — run it on your own archive first and see the number before you decide.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Questions</h2>
+      <div class="faq">
+        <div>
+          <h3>Can I try it before buying?</h3>
+          <p>Yes. The free version scans everything and exports the full report, so you can see exactly what it found and how much space it would recover. A licence key is only required to move flagged files into quarantine.</p>
+        </div>
+        <div>
+          <h3>Will it work on my external drives?</h3>
+          <p>Yes — that is what it was built for. You can add folders or whole drive roots from as many connected drives as you like, and files are compared across all of them.</p>
+        </div>
+        <div>
+          <h3>What happens to a file I quarantine?</h3>
+          <p>It is moved to a quarantine folder on the same drive and recorded, not deleted. For 24 hours it can be restored with one click to its exact original location. Nothing is ever removed from your drive without you choosing to empty quarantine yourself.</p>
+        </div>
+        <div>
+          <h3>Does it need an internet connection?</h3>
+          <p>Once, to activate. After that it works offline indefinitely — no repeated licence checks and no account.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="wordmark" style="font-size:1.1rem;">ALMA<em>Z</em>E</p>
+        <p>Small-batch software, built out of real production
+           work — not written speculatively.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Tools</h4>
+          <a href="/duplicatefinder-pro.html">DuplicateFinder Pro</a>
+          <a href="/download.html">Download &amp; verify</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Suggest a feature</a>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=bug" target="_blank" rel="noopener">Report a bug</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="/origin-story.html">Why it exists</a>
+          <a href="mailto:support@almaze.tools">Email us</a>
+          <a href="https://github.com/Fellh/almaze-tools" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <span>Amharic for diamond.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "DuplicateFinder Pro",
+  "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "Duplicate file finder",
+  "operatingSystem": "Windows 10, Windows 11",
+  "softwareVersion": "1.5",
+  "url": "https://almaze.tools/duplicatefinder-pro.html",
+  "downloadUrl": "https://almaze.tools/download.html",
+  "description": "Finds duplicate photos, RAW files and videos across folders and across separate drives by comparing file contents rather than filenames. Flagged files are moved to a 24-hour quarantine with one-click restore rather than deleted.",
+  "featureList": [
+    "Compare two or more folders or entire drives for byte-identical files",
+    "RAW and exported JPG pairing, including across different folders",
+    "Video matching by content only, so GoPro chapter files are not mistaken for duplicates",
+    "24-hour quarantine with one-click restore instead of deletion",
+    "Crash-resilient checkpointing for multi-hour scans",
+    "Storage Map and CSV and HTML scan reports",
+    "Reusable folder exclusion profiles",
+    "Works offline after a single activation"
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Almaze",
+    "url": "https://almaze.tools/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "34.00",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://almaze7.gumroad.com/l/duplicatefinder-pro"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I try it before buying?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The free version scans everything and exports the full report, so you can see exactly what it found and how much space it would recover. A licence key is only required to move flagged files into quarantine."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will it work on my external drives?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — that is what it was built for. You can add folders or whole drive roots from as many connected drives as you like, and files are compared across all of them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to a file I quarantine?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is moved to a quarantine folder on the same drive and recorded, not deleted. For 24 hours it can be restored with one click to its exact original location. Nothing is ever removed from your drive without you choosing to empty quarantine yourself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it need an internet connection?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Once, to activate. After that it works offline indefinitely — no repeated licence checks and no account."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
