@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will a Duplicate Finder Break My Lightroom Catalog?</title>
+<meta name="description" content="What actually happens to a Lightroom catalog when a duplicate finder moves or deletes a photo, why edits survive, and how to clean up an archive without losing work.">
+<link rel="canonical" href="https://almaze.tools/duplicate-finder-lightroom-catalog.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Almaze">
+<meta property="og:url" content="https://almaze.tools/duplicate-finder-lightroom-catalog.html">
+<meta property="og:title" content="Will a duplicate finder break my Lightroom catalog?">
+<meta property="og:description" content="What actually happens to a Lightroom catalog when a duplicate finder moves or deletes a photo, why edits survive, and how to clean up an archive without losing work.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Will a duplicate finder break my Lightroom catalog?">
+<meta name="twitter:description" content="What actually happens to a Lightroom catalog when a duplicate finder moves or deletes a photo, why edits survive, and how to clean up an archive without losing work.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--ice); outline-offset:3px; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:110px 0; }
+  @media (max-width:640px){ section{ padding:72px 0; } .wrap{ padding:0 20px; } }
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  footer{ padding:60px 0 48px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
+  .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .foot-col h4{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink); font-size:0.9rem; margin-bottom:9px; opacity:0.85; }
+  .foot-col a:hover{ opacity:1; color:var(--gold-soft); }
+  .foot-bottom{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  .panel{
+    border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:36px;
+  }
+  .panel + .panel{ margin-top:18px; }
+  .panel h2{ font-size:1.6rem; margin-bottom:10px; }
+  .panel p.sub{ color:var(--ink-dim); max-width:62ch; margin:0 0 28px; }
+  .quiet{ color:var(--ink-dim); font-size:0.92rem; }
+  code{ font-family:'IBM Plex Mono', monospace; font-size:0.86em; color:var(--ice); }
+
+  /* ══ Article page ═════════════════════════════════════════════
+     This page answers a question someone types while worried.
+     The answer goes first, in full, before any explanation —
+     making an anxious reader scroll for the verdict is a way of
+     holding their attention hostage.
+     ═══════════════════════════════════════════════════════════ */
+  .art-hero{ padding:80px 0 0; }
+  .art-hero h1{
+    font-size:clamp(2rem, 4.6vw, 3rem);
+    line-height:1.12; letter-spacing:-0.01em;
+    margin:14px 0 26px; max-width:22ch;
+  }
+  .art-hero h1 em{ color:var(--gold-soft); font-style:italic; }
+
+  /* The short answer, set apart. Ice = verified fact on this site. */
+  .answer{
+    border:1px solid var(--ice); border-left:3px solid var(--ice);
+    border-radius:3px; background:rgba(191,230,242,0.04);
+    padding:26px 30px; max-width:70ch;
+  }
+  .answer p{ margin:0 0 14px; font-size:1.05rem; }
+  .answer p:last-child{ margin-bottom:0; }
+  .answer strong{ color:var(--ice); }
+
+  .prose{ max-width:68ch; }
+  .prose h2{ font-size:1.75rem; margin:0 0 14px; }
+  .prose h3{ font-size:1.12rem; margin:30px 0 8px; }
+  .prose p{ color:var(--ink-dim); margin:0 0 18px; }
+  .prose p.lead{ color:var(--ink); }
+  .prose ul{ color:var(--ink-dim); padding-left:20px; margin:0 0 18px; }
+  .prose li{ margin-bottom:9px; }
+  .prose a{ color:var(--ice); }
+  .block{ margin-bottom:64px; }
+  .block:last-child{ margin-bottom:0; }
+
+  /* Two-column fact split: what lives where */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0 0; }
+  .split > div{
+    border:1px solid var(--line); border-radius:4px;
+    background:var(--bg-base); padding:24px;
+  }
+  .split h3{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 14px; font-weight:400;
+  }
+  .split ul{ margin:0; padding-left:18px; color:var(--ink); font-size:0.94rem; }
+  .split li{ margin-bottom:8px; }
+  @media (max-width:760px){ .split{ grid-template-columns:1fr; } }
+
+  /* Numbered walkthrough */
+  ol.walk{ counter-reset:w; list-style:none; margin:0; padding:0; }
+  ol.walk li{
+    counter-increment:w; position:relative;
+    padding:0 0 0 46px; margin-bottom:26px;
+  }
+  ol.walk li:last-child{ margin-bottom:0; }
+  ol.walk li::before{
+    content:counter(w, decimal-leading-zero);
+    position:absolute; left:0; top:2px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    color:var(--ice); letter-spacing:0.08em;
+  }
+  ol.walk strong{ display:block; margin-bottom:5px; }
+  ol.walk span{ color:var(--ink-dim); font-size:0.95rem; }
+
+  .faq div{ padding:22px 0; border-bottom:1px solid var(--line); }
+  .faq div:last-child{ border-bottom:none; padding-bottom:0; }
+  .faq h3{ font-size:1.08rem; margin:0 0 8px; }
+  .faq p{ color:var(--ink-dim); font-size:0.95rem; margin:0; max-width:70ch; }
+
+  @media (max-width:640px){
+    .panel{ padding:24px; }
+    .answer{ padding:22px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+    .btn:hover{ transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="/duplicatefinder-pro.html">Tools</a>
+      <a href="/download.html">Download</a>
+      <a href="/origin-story.html">Story</a>
+      <a href="mailto:support@almaze.tools">Help</a>
+    </div>
+  </div>
+</nav>
+
+<header class="art-hero wrap">
+  <p class="eyebrow">Lightroom &amp; duplicate cleanup</p>
+  <h1>Will a duplicate finder <em>break</em> my Lightroom catalog?</h1>
+
+  <div class="answer">
+    <p><strong>Short answer: it can't corrupt your catalog, and it can't lose your edits — but it can make photos go missing until you put them back.</strong></p>
+    <p>Your develop settings, crops, ratings, keywords and collections live inside the catalog file, not inside the photo. Moving or deleting a photo on disk doesn't touch any of that. What it does is break the catalog's <em>pointer</em> to the file, and Lightroom shows that photo as missing.</p>
+    <p>Whether that's a scare or a disaster depends entirely on one thing: whether the tool you used can put the file back exactly where it was.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap prose">
+
+    <div class="block">
+      <h2>What Lightroom actually stores</h2>
+      <p class="lead">Almost every worry about duplicate finders and Lightroom comes from one misunderstanding: people assume their editing work lives in the photo. It doesn't.</p>
+      <p>Lightroom is a non-destructive editor. It never rewrites your RAW file. Every adjustment you have ever made is a database row in the catalog, pointing at a file path on disk.</p>
+
+      <div class="split">
+        <div>
+          <h3>In the catalog (.lrcat)</h3>
+          <ul>
+            <li>All develop settings and crops</li>
+            <li>Ratings, flags, colour labels</li>
+            <li>Keywords and metadata</li>
+            <li>Collections and stacks</li>
+            <li>History for every photo</li>
+            <li>The file path each photo points to</li>
+          </ul>
+        </div>
+        <div>
+          <h3>On disk</h3>
+          <ul>
+            <li>The RAW or JPG file itself</li>
+            <li>Nothing else that Lightroom needs</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top:26px;">This is why the answer above is what it is. A duplicate finder operates on the right-hand column only. It has no way to alter the left-hand column, because it never opens the catalog file at all.</p>
+    </div>
+
+    <div class="block">
+      <h2>What actually happens when a catalogued photo is moved</h2>
+      <p>Lightroom keeps preview images of its own, so the first surprise is that nothing looks broken immediately. You'll still see thumbnails. What you get is a small exclamation-mark badge on the affected photos, and a message about the file being offline or missing when you try to develop or export one.</p>
+      <p>That state is entirely recoverable, and it's recoverable in two different ways:</p>
+      <ul>
+        <li><strong>Put the file back where it was.</strong> The catalog's stored path becomes valid again and Lightroom reconnects on its own. Nothing to click.</li>
+        <li><strong>Point Lightroom at the file's new location</strong> using Find Missing Photo, or Library → Find All Missing Photos for a batch.</li>
+      </ul>
+      <p>The first is far less work, and it's the one that matters when choosing a tool. A duplicate finder that <em>deletes</em> leaves you only the second option — and only if the file went to the Recycle Bin and is still there.</p>
+    </div>
+
+    <div class="block">
+      <h2>What DuplicateFinder Pro does about this</h2>
+      <p>Two things by design, and one honest gap.</p>
+
+      <h3>Lightroom's working folders are never scanned</h3>
+      <p>Lightroom's <code>.lrdata</code> preview folders and <code>.cache</code> directories are excluded from scanning outright, alongside Windows, Program Files, the Recycle Bin and Adobe Premiere Pro's working folders. Preview pyramids contain many similar-looking files, which is exactly the kind of thing a duplicate scan should never be turned loose on. You can add your own exclusions on top and save them as reusable profiles.</p>
+
+      <h3>Nothing is deleted, so putting a file back is one click</h3>
+      <p>Files identified as duplicates are moved to a quarantine folder on the same drive and recorded — not erased. For 24 hours they can be restored with one click, and restore returns each file to its <em>exact</em> original path. Because the path is identical, Lightroom reconnects by itself: no Find Missing Photo, no re-linking, no lost edits. After the hold, files stay in quarantine until you choose to empty it yourself, and restore is never locked behind a licence.</p>
+
+      <h3>The gap: it doesn't read your catalog</h3>
+      <p>DuplicateFinder Pro has no knowledge of which photos are in your catalog and which aren't. It sees files on disk. If you quarantine a photo Lightroom has catalogued, Lightroom will show it as missing until you restore it — which is a one-click fix rather than lost work, but it is a real inconvenience and worth knowing before you start. Catalog awareness is a planned feature, not a shipped one, and this page will say so until that changes.</p>
+    </div>
+
+    <div class="block">
+      <h2>How to clean up an archive without the scare</h2>
+      <p>This sequence works with any duplicate finder, not just this one.</p>
+
+      <ol class="walk">
+        <li>
+          <strong>Back up the catalog first</strong>
+          <span>File → Back Up Catalog, or just copy the <code>.lrcat</code> somewhere safe. It takes seconds and it is the only irreplaceable file in the whole operation.</span>
+        </li>
+        <li>
+          <strong>Scan and read the report before moving anything</strong>
+          <span>Scanning and exporting the full CSV and HTML report is free in DuplicateFinder Pro — no licence needed. Read what it found before you act on any of it.</span>
+        </li>
+        <li>
+          <strong>Start with folders your catalog doesn't cover</strong>
+          <span>Old camera dumps, card backups, an archive drive you never imported. These are where most duplicates live and where nothing can go missing in Lightroom at all.</span>
+        </li>
+        <li>
+          <strong>Exclude your active catalog folders on the first pass</strong>
+          <span>Add them as exclusions and save the set as a profile. You can widen the scope later, once you trust what the tool is reporting.</span>
+        </li>
+        <li>
+          <strong>After quarantining, open Lightroom and look</strong>
+          <span>Do this while the 24-hour hold is still running. If photos show as missing, restore and they reconnect on their own. This is what the hold is for.</span>
+        </li>
+        <li>
+          <strong>Empty quarantine only when you're satisfied</strong>
+          <span>The space isn't reclaimed until you do — quarantine moves files rather than copying them, so holding them costs nothing while you check.</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="panel" style="margin-top:64px;">
+      <h2>The tool this page is about</h2>
+      <p class="sub">DuplicateFinder Pro finds duplicate photos, RAW files and videos across folders and across separate drives by comparing file contents rather than filenames — and quarantines them instead of deleting them.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="/duplicatefinder-pro.html">What it does &rarr;</a>
+        <a class="btn btn-ghost" href="/download.html">Download &amp; verify</a>
+      </div>
+    </div>
+
+    <div class="block" style="margin-top:64px;">
+      <h2>Related questions</h2>
+      <div class="faq">
+        <div>
+          <h3>Can a duplicate finder corrupt my Lightroom catalog?</h3>
+          <p>Not by moving or deleting photos. The catalog is a separate database file that a duplicate finder never opens. What can happen is that photos show as missing because their file paths no longer resolve — a broken link, not a corrupted database.</p>
+        </div>
+        <div>
+          <h3>Will I lose my edits if a photo gets deleted?</h3>
+          <p>Your develop settings stay in the catalog regardless. If you restore the file to its original path, the photo reconnects with every adjustment intact. If the file is permanently gone and you have no backup, the settings remain but have nothing to apply to.</p>
+        </div>
+        <div>
+          <h3>Is it safe to delete duplicate RAW and JPG pairs?</h3>
+          <p>That depends on your workflow, not on the tool. If the JPG is an export you can regenerate from the RAW, removing it is low-risk. If you catalogued both and built collections around the JPG, treat it as a catalogued photo like any other and check Lightroom before emptying quarantine.</p>
+        </div>
+        <div>
+          <h3>Should I run a duplicate finder on my Lightroom previews folder?</h3>
+          <p>No. Preview pyramids contain many near-identical images by design, and they're rebuildable working files rather than originals. DuplicateFinder Pro excludes <code>.lrdata</code> and <code>.cache</code> directories automatically for this reason.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="wordmark" style="font-size:1.1rem;">ALMA<em>Z</em>E</p>
+        <p>Small-batch software, built out of real production
+           work — not written speculatively.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Tools</h4>
+          <a href="/duplicatefinder-pro.html">DuplicateFinder Pro</a>
+          <a href="/download.html">Download &amp; verify</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Suggest a feature</a>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=bug" target="_blank" rel="noopener">Report a bug</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="/origin-story.html">Why it exists</a>
+          <a href="mailto:support@almaze.tools">Email us</a>
+          <a href="https://github.com/Fellh/almaze-tools" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <span>Amharic for diamond.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can a duplicate finder corrupt my Lightroom catalog?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not by moving or deleting photos. The catalog is a separate database file that a duplicate finder never opens. What can happen is that photos show as missing because their file paths no longer resolve — a broken link, not a corrupted database."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will I lose my edits if a photo gets deleted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your develop settings stay in the catalog regardless. If you restore the file to its original path, the photo reconnects with every adjustment intact. If the file is permanently gone and you have no backup, the settings remain but have nothing to apply to."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to delete duplicate RAW and JPG pairs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That depends on your workflow, not on the tool. If the JPG is an export you can regenerate from the RAW, removing it is low-risk. If you catalogued both and built collections around the JPG, treat it as a catalogued photo like any other and check Lightroom before emptying quarantine."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I run a duplicate finder on my Lightroom previews folder?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Preview pyramids contain many near-identical images by design, and they are rebuildable working files rather than originals. DuplicateFinder Pro excludes .lrdata and .cache directories automatically for this reason."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
