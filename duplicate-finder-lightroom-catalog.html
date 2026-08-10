@@ -218,6 +218,7 @@
     <p><strong>Short answer: it can't corrupt your catalog, and it can't lose your edits — but it can make photos go missing until you put them back.</strong></p>
     <p>Your develop settings, crops, ratings, keywords and collections live inside the catalog file, not inside the photo. Moving or deleting a photo on disk doesn't touch any of that. What it does is break the catalog's <em>pointer</em> to the file, and Lightroom shows that photo as missing.</p>
     <p>Whether that's a scare or a disaster depends entirely on one thing: whether the tool you used can put the file back exactly where it was.</p>
+    <p style="border-top:1px solid rgba(191,230,242,0.25); padding-top:14px;"><strong>Stated plainly up front:</strong> DuplicateFinder Pro does <em>not</em> read your Lightroom catalog. It skips Lightroom's working folders, but it has no idea which photos you've catalogued. What it has instead is a 24-hour quarantine and a restore that puts files back on their exact original path — which is why a mistake here is a one-click fix rather than lost work. <a href="#gap" style="color:var(--ice);">The full detail on that gap &darr;</a></p>
   </div>
 </header>
 
@@ -274,7 +275,7 @@
       <h3>Nothing is deleted, so putting a file back is one click</h3>
       <p>Files identified as duplicates are moved to a quarantine folder on the same drive and recorded — not erased. For 24 hours they can be restored with one click, and restore returns each file to its <em>exact</em> original path. Because the path is identical, Lightroom reconnects by itself: no Find Missing Photo, no re-linking, no lost edits. After the hold, files stay in quarantine until you choose to empty it yourself, and restore is never locked behind a licence.</p>
 
-      <h3>The gap: it doesn't read your catalog</h3>
+      <h3 id="gap">The gap: it doesn't read your catalog</h3>
       <p>DuplicateFinder Pro has no knowledge of which photos are in your catalog and which aren't. It sees files on disk. If you quarantine a photo Lightroom has catalogued, Lightroom will show it as missing until you restore it — which is a one-click fix rather than lost work, but it is a real inconvenience and worth knowing before you start. Catalog awareness is a planned feature, not a shipped one, and this page will say so until that changes.</p>
     </div>
 
