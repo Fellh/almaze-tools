@@ -323,31 +323,35 @@
       <ol class="walk">
         <li>
           <strong>Connect both drives and let Windows finish mounting them</strong>
-          <span>Note the letters. If either drive spins up and down on idle, plug it into a powered hub rather than a bus-powered port — a drive that sleeps mid-scan turns a clean result into an interrupted one.</span>
+          <span>If either drive spins down when idle, use a powered hub rather than a bus-powered port. A drive that sleeps mid-scan turns a clean result into an interrupted one.</span>
         </li>
         <li>
-          <strong>Decide which drive is the keeper before you scan anything</strong>
-          <span>This decision is the whole answer, and the software will not make it for you. Choose the newer, larger, or healthier drive — whichever you intend to still be using next year.</span>
+          <strong>Decide which drive is the keeper before you open anything</strong>
+          <span>This decision is the whole answer, and the software will not make it for you. Choose the newer, larger or healthier drive — whichever you intend to still be using next year.</span>
+        </li>
+        <li>
+          <strong>Open the Folder Duplicates tab</strong>
+          <span>This is where comparison across two or more locations happens. It has its own folder list and its own scan button, separate from the single <em>Scan Target</em> field in the left-hand rail — that field is for scanning one location on its own.</span>
         </li>
         <li>
           <strong>Add the keeper drive first, then the drive you're retiring</strong>
-          <span>Order is meaningful. The copy in the first-listed folder is the one kept; everything matching it in later folders is what gets flagged. Get this backwards and you'll flag the copies you meant to keep. You can add drive roots, not just folders, and as many as you have connected.</span>
+          <span>Use <em>+ Add Folder / Drive…</em> under <em>Folders / Drives to Compare</em>. You can add a whole drive root, not just a folder, and you can add more than two. No naming convention or folder structure is assumed — every file underneath each location is checked by content, at any depth, against every file under the others.</span>
         </li>
         <li>
-          <strong>Choose which file categories to scan</strong>
-          <span>RAW, JPG, video and GoPro audio are separate switches. On a multi-terabyte pair, running RAWs on one pass and video on another is usually more manageable than one overnight job — and lets you act on the first result while the second runs.</span>
+          <strong>Read the keeper rule before you scan</strong>
+          <span>The app states it directly above the scan button: the copy in the <em>first</em> folder listed is the one kept, and matching copies in the folders below it are the ones flagged. There is no drag to reorder — to change which copy wins, select a folder, click <em>Remove Selected</em>, and add it back in the order you want.</span>
         </li>
         <li>
-          <strong>Run the scan and leave it alone</strong>
-          <span>Progress is checkpointed at phase boundaries, so an interrupted scan resumes rather than restarting. If the window greys out, Windows is busy, not crashed — on a job this size that distinction is worth knowing in advance.</span>
+          <strong>Click Scan for Duplicate Files</strong>
+          <span>The button directly beneath the folder list — not <em>Start Scan</em> in the left rail, which runs the single-target scan instead. Progress is checkpointed, so a paused or interrupted scan resumes rather than starting over. If the window greys out, Windows is busy, not crashed.</span>
         </li>
         <li>
-          <strong>Read the report before you move anything</strong>
-          <span>Every row names the file being kept and the file being flagged, in full, along with which of the three tests matched them. Export the CSV and keep it — it is your record of what the state of both drives was on the day you did this.</span>
+          <strong>Read the results before you move anything</strong>
+          <span>The <em>Duplicate Files Found</em> table gives every row a <em>Role</em> — whether it is the copy being kept or a flagged copy — along with its size, its folder, and a <em>Match</em> column naming which test found it. Select any row to preview the file. A running <em>Recoverable</em> figure, group count and flagged count sit along the bottom. Use <em>Export Report (CSV)</em> before you touch anything: it is your record of what both drives looked like on the day you did this.</span>
         </li>
         <li>
-          <strong>Quarantine, don't delete</strong>
-          <span>Flagged files move to a quarantine folder on their own drive and are recorded. Nothing crosses between drives, and nothing is erased. Because it moves rather than copies, holding them costs no additional space.</span>
+          <strong>Flag, then quarantine</strong>
+          <span>Marking rows with <em>Flag for Deletion</em> does not delete anything — it marks them, and <em>Move Flagged to Quarantine</em> is what actually moves them. You can also select rows and use <em>Move Selected to Quarantine</em> directly. Files move to a quarantine folder on their own drive; nothing crosses between drives and nothing is erased. The left rail says so in as many words: <em>Quarantine never deletes</em>.</span>
         </li>
         <li>
           <strong>Use the 24 hours</strong>
@@ -398,7 +402,7 @@
         </div>
         <div>
           <h3>Which copy gets kept?</h3>
-          <p>The one in the first-listed folder. You control that by the order in which you add the folders or drive roots, and the report names the surviving file explicitly on every row. The app never tries to guess which drive is your archive.</p>
+          <p>The one in the first folder listed in the Folder Duplicates tab. The app states this rule on screen above the scan button, and every result row carries a Role column naming whether it is the copy being kept or a flagged copy. To change which copy wins, remove a folder from the list and add it back in the order you want. The app never tries to guess which drive is your archive.</p>
         </div>
         <div>
           <h3>What about files that exist only on the drive I'm retiring?</h3>
@@ -450,6 +454,7 @@
           <a href="/verify-card-copy-before-formatting.html">Verify a card copy before formatting</a>
           <a href="/duplicate-finder-lightroom-catalog.html">Duplicate finders and Lightroom</a>
           <a href="/find-duplicate-photos-two-external-drives.html">Duplicates across two external drives</a>
+          <a href="/remove-duplicate-photos-without-deleting-originals.html">Removing duplicates without deleting</a>
         </div>
         <div class="foot-col">
           <h4>Support</h4>
@@ -562,23 +567,33 @@
     },
     {
       "@type": "HowToStep",
+      "name": "Open the Folder Duplicates tab",
+      "text": "Comparison across two or more locations happens in the Folder Duplicates tab, which has its own folder list and scan button separate from the single Scan Target field."
+    },
+    {
+      "@type": "HowToStep",
       "name": "Add the keeper drive first",
-      "text": "Add the keeper drive root first, then the drive being retired. The copy in the first-listed location is the one kept."
+      "text": "Use Add Folder / Drive to add the drive you are keeping, then the drive you are retiring. Whole drive roots can be added, and more than two locations are supported."
     },
     {
       "@type": "HowToStep",
-      "name": "Select file categories and scan",
-      "text": "Choose RAW, JPG, video or GoPro audio and run the scan. Files are matched by size, then a partial fingerprint, then a full MD5 of the whole file."
+      "name": "Check the keeper rule",
+      "text": "The copy in the first folder listed is the one kept; matching copies in folders below it are flagged. To change the order, remove a folder and add it back in the order you want."
     },
     {
       "@type": "HowToStep",
-      "name": "Read the report",
-      "text": "Every row names the file kept and the file flagged, and which test matched them. Export the CSV before moving anything."
+      "name": "Scan for duplicate files",
+      "text": "Click Scan for Duplicate Files beneath the folder list. Files are matched by content at any depth, regardless of filename or folder structure."
     },
     {
       "@type": "HowToStep",
-      "name": "Quarantine rather than delete",
-      "text": "Flagged files are moved to a quarantine folder on their own drive with a 24-hour hold and one-click restore."
+      "name": "Read the results and export the report",
+      "text": "Each row names its role, size, folder and which test matched it. Export the CSV report before moving anything."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Flag, then move to quarantine",
+      "text": "Flagging marks rows without deleting them. Move Flagged to Quarantine moves them to a quarantine folder on their own drive, with a 24-hour hold and one-click restore."
     },
     {
       "@type": "HowToStep",

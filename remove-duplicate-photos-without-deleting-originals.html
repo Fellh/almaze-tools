@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Remove Duplicate Photos Without Deleting the Originals</title>
+<meta name="description" content="A step-by-step walkthrough: verifying the installer, what Windows says about unsigned software, scanning by file content, and why flagged photos should be moved and held rather than deleted. Free to scan.">
+<link rel="canonical" href="https://almaze.tools/remove-duplicate-photos-without-deleting-originals.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Almaze">
+<meta property="og:url" content="https://almaze.tools/remove-duplicate-photos-without-deleting-originals.html">
+<meta property="og:title" content="How to remove duplicate photos without deleting the originals">
+<meta property="og:description" content="Nothing should leave your archive on the same click that found it. A step-by-step walkthrough of scanning by content, flagging, quarantine and one-click restore.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to remove duplicate photos without deleting the originals">
+<meta name="twitter:description" content="Nothing should leave your archive on the same click that found it. A step-by-step walkthrough of scanning by content, flagging, quarantine and one-click restore.">
+
+<!-- Fonts load off the critical path. The preload fetches the stylesheet at high
+     priority; media="print" keeps it from blocking the first paint, and onload
+     promotes it. Text appears immediately in the fallback stack defined below,
+     then swaps to Fraunces / Work Sans when they arrive. -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', 'Segoe UI', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--ice); outline-offset:3px; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:110px 0; }
+  @media (max-width:640px){ section{ padding:72px 0; } .wrap{ padding:0 20px; } }
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  footer{ padding:60px 0 48px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
+  .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .foot-col h4{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink); font-size:0.9rem; margin-bottom:9px; opacity:0.85; }
+  .foot-col a:hover{ opacity:1; color:var(--gold-soft); }
+  .foot-bottom{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  .panel{
+    border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:36px;
+  }
+  .panel + .panel{ margin-top:18px; }
+  .panel h2{ font-size:1.6rem; margin-bottom:10px; }
+  .panel p.sub{ color:var(--ink-dim); max-width:62ch; margin:0 0 28px; }
+  .quiet{ color:var(--ink-dim); font-size:0.92rem; }
+  code{ font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.86em; color:var(--ice); }
+
+  /* ══ Article page ═════════════════════════════════════════════
+     This page answers a question someone types while worried.
+     The answer goes first, in full, before any explanation —
+     making an anxious reader scroll for the verdict is a way of
+     holding their attention hostage.
+     ═══════════════════════════════════════════════════════════ */
+  /* Same shorthand issue as the other heroes: sides left to .wrap. */
+  .art-hero{ padding-top:80px; padding-bottom:0; }
+  .art-hero h1{
+    font-size:clamp(2rem, 4.6vw, 3rem);
+    line-height:1.12; letter-spacing:-0.01em;
+    margin:14px 0 26px; max-width:22ch;
+  }
+  .art-hero h1 em{ color:var(--gold-soft); font-style:italic; }
+
+  /* The short answer, set apart. Ice = verified fact on this site. */
+  .answer{
+    border:1px solid var(--ice); border-left:3px solid var(--ice);
+    border-radius:3px; background:rgba(191,230,242,0.04);
+    padding:26px 30px; max-width:70ch;
+  }
+  .answer p{ margin:0 0 14px; font-size:1.05rem; }
+  .answer p:last-child{ margin-bottom:0; }
+  .answer strong{ color:var(--ice); }
+
+  .prose{ max-width:68ch; }
+  .prose h2{ font-size:1.75rem; margin:0 0 14px; }
+  .prose h3{ font-size:1.12rem; margin:30px 0 8px; }
+  .prose p{ color:var(--ink-dim); margin:0 0 18px; }
+  .prose p.lead{ color:var(--ink); }
+  .prose ul{ color:var(--ink-dim); padding-left:20px; margin:0 0 18px; }
+  .prose li{ margin-bottom:9px; }
+  .prose a{ color:var(--ice); }
+  .block{ margin-bottom:64px; }
+  .block:last-child{ margin-bottom:0; }
+
+  /* Two-column fact split: what lives where */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0 0; }
+  .split > div{
+    border:1px solid var(--line); border-radius:4px;
+    background:var(--bg-base); padding:24px;
+  }
+  .split h3{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.68rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 14px; font-weight:400;
+  }
+  .split ul{ margin:0; padding-left:18px; color:var(--ink); font-size:0.94rem; }
+  .split li{ margin-bottom:8px; }
+  @media (max-width:760px){ .split{ grid-template-columns:1fr; } }
+
+  /* Numbered walkthrough */
+  ol.walk{ counter-reset:w; list-style:none; margin:0; padding:0; }
+  ol.walk li{
+    counter-increment:w; position:relative;
+    padding:0 0 0 46px; margin-bottom:26px;
+  }
+  ol.walk li:last-child{ margin-bottom:0; }
+  ol.walk li::before{
+    content:counter(w, decimal-leading-zero);
+    position:absolute; left:0; top:2px;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.72rem;
+    color:var(--ice); letter-spacing:0.08em;
+  }
+  ol.walk strong{ display:block; margin-bottom:5px; }
+  ol.walk span{ color:var(--ink-dim); font-size:0.95rem; }
+
+  .faq div{ padding:22px 0; border-bottom:1px solid var(--line); }
+  .faq div:last-child{ border-bottom:none; padding-bottom:0; }
+  .faq h3{ font-size:1.08rem; margin:0 0 8px; }
+  .faq p{ color:var(--ink-dim); font-size:0.95rem; margin:0; max-width:70ch; }
+
+  @media (max-width:640px){
+    .panel{ padding:24px; }
+    .answer{ padding:22px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+    .btn:hover{ transform:none; }
+  }
+
+  /* Code block for the free PowerShell method. Monospace already loaded
+     for .eyebrow; ice is this site's colour for verified fact. */
+  pre.code{
+    background:var(--bg-base); border:1px solid var(--line);
+    border-left:3px solid var(--ice); border-radius:3px;
+    padding:20px 22px; overflow-x:auto; margin:0 0 18px;
+  }
+  pre.code code{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.82rem;
+    color:var(--ink); line-height:1.7; white-space:pre;
+  }
+  @media (max-width:640px){ pre.code{ padding:16px; } pre.code code{ font-size:0.74rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="/duplicatefinder-pro.html">Tools</a>
+      <a href="/download.html">Download</a>
+      <a href="/origin-story.html">Story</a>
+      <a href="mailto:support@almaze.tools">Help</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ VIDEO SLOT ═══════════════════════════════════════════════
+     When the walkthrough recording is ready, paste the embed iframe
+     directly below this comment, inside a <div class="wrap"> so it
+     lines up with the prose column.
+     ═══════════════════════════════════════════════════════════ -->
+
+<header class="art-hero wrap">
+  <p class="eyebrow">Step by step</p>
+  <h1>How to remove duplicate photos <em>without</em> deleting the originals</h1>
+
+  <div class="answer">
+    <p><strong>Short answer: don't delete anything. Move it, hold it, and look at your archive before you commit. Every irreversible photo loss involving a duplicate finder happens because deletion and identification were the same action.</strong></p>
+    <p>The walkthrough below uses DuplicateFinder Pro, which is ours. The principle isn't ours and applies to whatever you use: nothing should leave your archive on the same click that found it.</p>
+    <p>Scanning and the full reports are free, so you can run everything on this page and see the result before deciding anything.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap prose">
+
+    <div class="block">
+      <h2>Why "delete duplicates" is the wrong verb</h2>
+      <p class="lead">A duplicate finder makes two separate claims, and people usually only hear the first one.</p>
+      <p>The first claim is <em>these two files have identical contents</em>. That one can be proven, and good software proves it by reading both files rather than comparing their names.</p>
+      <p>The second claim is <em>and therefore you don't need this one</em>. That is not a fact about the files. It depends on which drive you're keeping, which folder your catalog points at, whether the second copy is a backup you meant to have, and whether the thing you're about to delete is genuinely duplicated or merely similar. Software can't know any of that.</p>
+      <p>So the safe shape of this job is: let the software make the first claim, keep the second one for yourself, and make sure the gap between them is reversible. In practice that means files get <em>moved</em> and held, not deleted, and you get to look at your archive before anything becomes permanent.</p>
+    </div>
+
+    <div class="block">
+      <h2>Before you run anything</h2>
+      <ul>
+        <li><strong>Decide which location is the keeper.</strong> If you're comparing more than one folder or drive, work out in advance which one is the archive you intend to keep. This is the only decision the software genuinely cannot make for you.</li>
+        <li><strong>Know where your catalog points.</strong> If you work in Lightroom or Capture One, quarantining a catalogued photo will make it show as missing until you restore it. <a href="/duplicate-finder-lightroom-catalog.html">What that actually looks like</a> is worth reading first.</li>
+        <li><strong>Don't start with your only copy of anything.</strong> This isn't specific to our software. Any operation that moves thousands of files is one you want a backup behind.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h2>Installing it, and what Windows will say</h2>
+      <p>DuplicateFinder Pro isn't code-signed. A signing certificate is an annual cost that hasn't been taken on yet, and without one Windows describes the publisher as unknown. That's a statement about paperwork, not about the file — but it produces warnings that deserve a straight explanation rather than a "just click through".</p>
+
+      <ol class="walk">
+        <li>
+          <strong>Check the fingerprint before you run the installer</strong>
+          <span>The <a href="/download.html">download page</a> publishes the installer's SHA-256 hash. Open PowerShell in the folder you downloaded to and run <code>Get-FileHash .\DuplicateFinderPro_Setup_v1.5.exe -Algorithm SHA256</code>. It should match character for character. If it doesn't, don't run it — download it again, and if it still differs, email support.</span>
+        </li>
+        <li>
+          <strong>Your browser says the file isn't commonly downloaded</strong>
+          <span>That's a statement about download volume. A new installer from a small publisher has no history behind it. Choose <em>Keep</em> — in Edge it's under the arrow beside Delete.</span>
+        </li>
+        <li>
+          <strong>SmartScreen shows a blue "Windows protected your PC" screen</strong>
+          <span>Click <em>More info</em>, then <em>Run anyway</em>. This is exactly what the fingerprint check was for: you verified the file yourself, so you don't need a certificate to tell you it's the file that was built.</span>
+        </li>
+        <li>
+          <strong>The installer asks for administrator permission</strong>
+          <span>It installs to Program Files and registers an uninstaller. Nothing outside its own folder is touched.</span>
+        </li>
+        <li>
+          <strong>Activate, if you bought a licence</strong>
+          <span><em>Help → Activate</em>, then paste the key from your receipt. You need to be online once. After that it works offline indefinitely, with no repeated checks and no account. If you haven't bought one, skip this — everything up to moving files works without it.</span>
+        </li>
+      </ol>
+
+      <p class="quiet" style="margin-top:26px;">If any of that leaves you uncomfortable, that's a reasonable place to land. Run the fingerprint check, and if you're still not comfortable, don't install it. Clicking through warnings you don't understand is a worse habit than skipping one piece of software.</p>
+    </div>
+
+    <div class="block">
+      <h2>Scanning one drive</h2>
+      <p>If you're cleaning up a single archive — one drive, one folder tree — this is the whole flow.</p>
+
+      <ol class="walk">
+        <li>
+          <strong>Set the scan target</strong>
+          <span>Top left, under <em>Scan Target</em>. Use <em>Browse</em> to pick a folder, or point it at a whole drive root.</span>
+        </li>
+        <li>
+          <strong>Choose what gets scanned</strong>
+          <span>RAW photos, exported JPGs, raw video, rendered video and GoPro audio are separate switches in the left rail. On a multi-terabyte drive, running one category per pass finishes sooner and lets you act on the first result while the second runs.</span>
+        </li>
+        <li>
+          <strong>Set the RAW/JPG similarity threshold if you need to</strong>
+          <span>The slider defaults to 90. It only affects the pairing of a RAW with its exported JPG, which uses a perceptual comparison rather than an exact one. Lower catches more heavily cropped exports; higher restricts it to near-exact matches. Leave it alone unless your exports are cropped hard.</span>
+        </li>
+        <li>
+          <strong>Start the scan</strong>
+          <span>Progress is checkpointed at phase boundaries, so pausing or an interrupted run resumes rather than starting over. If the window greys out, Windows is busy, not crashed.</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="block">
+      <h2>Comparing two or more locations</h2>
+      <p>Comparing separate folders or drives is a different tab, and it's easy to miss. <em>Scan Target</em> in the left rail takes one location. Cross-location comparison lives in <strong>Folder Duplicates</strong>, which has its own list and its own scan button.</p>
+      <p>Add locations with <em>Add Folder / Drive</em> — folders or whole drive roots, two or more, on any connected drives. No naming convention or folder structure is assumed: every file under each location is checked by content, at any depth, against every file under the others.</p>
+      <p>The rule that matters is stated on screen above the scan button: <strong>the copy in the first folder listed is the one kept.</strong> Matching copies in the folders below it are the ones flagged. There's no drag to reorder — to change which copy wins, select a folder, <em>Remove Selected</em>, and add it back in the order you want. Then click <em>Scan for Duplicate Files</em>, not <em>Start Scan</em>.</p>
+      <p>If you're consolidating two external drives specifically, there's a longer piece on <a href="/find-duplicate-photos-two-external-drives.html">how to compare two external drives</a> — including the order of operations that keeps the drive you're retiring safe.</p>
+    </div>
+
+    <div class="block">
+      <h2>Reading the results</h2>
+      <p>Results are split by kind across the tabs: RAW and JPG pairs in the same folder, RAW and JPG pairs across folders, duplicate JPGs, duplicate RAWs, duplicate videos, GoPro audio, and folder comparisons.</p>
+      <p>Every row carries a <strong>Role</strong> — whether it's the copy being kept or a copy being flagged — plus the file, its size, its folder, and a <strong>Match</strong> column naming which test found it. Select any row to preview the file. A running <em>Recoverable</em> figure, group count and flagged count sit along the bottom.</p>
+      <p>Three tests run in order, cheapest first. <strong>Size</strong>, which eliminates almost everything without reading a byte. <strong>A partial fingerprint</strong> of the first and last megabyte of whatever survived. Then <strong>a full read</strong> of whatever's still standing. Only a full-content match is reported as a duplicate — never a matching name, never a matching timestamp.</p>
+      <p>Export the CSV before you move anything. It costs nothing and it's your record of what the drive looked like on the day you did this.</p>
+
+      <h3>Rows marked Review</h3>
+      <p>RAW files sharing a filename but not byte-identical are grouped anyway, so you can see them side by side. Those rows read <code>stem+size</code> in the Match column rather than <code>md5</code>, and if the sizes differ by more than 5% they're marked <strong>Review</strong> instead of being flagged. The software is telling you it found something related and is declining to decide. Look at those yourself.</p>
+    </div>
+
+    <div class="block">
+      <h2>Flag, quarantine, delete — three different verbs</h2>
+      <p class="lead">These get confused, and the confusion is the dangerous part.</p>
+      <div class="split">
+        <div>
+          <h3>What each one does</h3>
+          <ul>
+            <li><strong>Flag for Deletion</strong> marks a row. It does not touch the file. Despite the name, nothing is deleted and nothing has moved.</li>
+            <li><strong>Move Flagged to Quarantine</strong> moves the marked files into a quarantine folder on their own drive and records where each came from.</li>
+            <li><strong>Move Selected to Quarantine</strong> does the same for rows you've highlighted, skipping the flagging step.</li>
+            <li><strong>Emptying quarantine</strong> is the only action that permanently removes anything, and it's yours alone to take.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What quarantine costs</h3>
+          <ul>
+            <li>It moves rather than copies, so holding files uses no extra space.</li>
+            <li>The honest trade: the space isn't reclaimed either, until you empty it.</li>
+            <li>Files are re-checked against the copy being kept at the moment they move, not just when the scan ran. Anything changed in between is skipped and named.</li>
+            <li>Identical filenames from different drives get unique names in quarantine, each keeping its own recorded origin.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>The 24 hours, and putting things back</h2>
+      <p>Quarantined files carry a 24-hour hold. Use it. Open your archive in whatever you actually work in — Lightroom, Bridge, Explorer — and look at it properly before emptying anything. The moment you regret a cleanup is almost always the moment after it finishes.</p>
+      <p>Restore is one click and returns each file to its exact original location. If a file's origin is on a drive that isn't connected, the app names that drive, leaves the file safely in quarantine, and offers to continue with the rest — it won't redirect anything to a path that merely looks close enough. Each file is written in full before its quarantine record clears, so an interrupted restore can't leave a half-written file in your archive.</p>
+      <p>Restore is never locked. Not without a licence, and not after a refund. Files this software moved are always files you can move back.</p>
+    </div>
+
+    <div class="block">
+      <h2>Questions</h2>
+      <div class="faq">
+        <div>
+          <h3>Can I do this without buying anything?</h3>
+          <p>Scanning, the Storage Map and the full CSV and HTML reports are free, with no account. You can run every scan on this page and see exactly what was found and how much space it would recover. The $34 licence is only needed to move flagged files into quarantine.</p>
+        </div>
+        <div>
+          <h3>Is anything deleted automatically?</h3>
+          <p>No. Nothing is deleted at any point by the software. Flagged files are moved to a quarantine folder on the same drive and recorded. Emptying quarantine is a separate action you take yourself, and restore and permanent delete are never locked behind the licence.</p>
+        </div>
+        <div>
+          <h3>What happens if I quarantine something Lightroom has catalogued?</h3>
+          <p>Lightroom will show it as missing until you restore it, which takes one click within the 24-hour hold or after it. The app excludes Lightroom's own working folders from scanning but has no knowledge of which photos are catalogued — catalog awareness is planned, not shipped.</p>
+        </div>
+        <div>
+          <h3>Why does it say "Flag for Deletion" if nothing gets deleted?</h3>
+          <p>Flagging marks rows so they can be moved in bulk afterwards; the file is untouched until you click Move Flagged to Quarantine, and quarantine is a folder rather than a bin. The label is more alarming than the behaviour.</p>
+        </div>
+        <div>
+          <h3>Does it find duplicates of documents or music?</h3>
+          <p>No. It looks at RAW photos, exported JPGs, MOV and MP4 video and GoPro WAV audio, and ignores everything else on the drive. It is not a general-purpose duplicate file cleaner — it is built for the one archive where a wrong deletion is unrecoverable.</p>
+        </div>
+        <div>
+          <h3>How long does a scan take?</h3>
+          <p>It depends on the archive, but the staged tests mean most files are eliminated on size alone without ever being read. A multi-terabyte pass can run for hours; it's checkpointed, so it can be paused and resumed rather than restarted.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Try it on your own archive</h2>
+      <p>The free scan tells you how much of your drive is genuinely redundant before you commit to anything. On a 931 GB drive here, it found 78.8 GB of second copies — worth knowing either way.</p>
+      <p style="margin-top:26px;">
+        <a class="btn btn-gold" href="/download.html">Download and verify &rarr;</a>
+        <a class="btn btn-ghost" href="/duplicatefinder-pro.html" style="margin-left:10px;">What it does</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="wordmark" style="font-size:1.1rem;">ALMA<em>Z</em>E</p>
+        <p>Small-batch software, built out of real production
+           work — not written speculatively.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Tools</h4>
+          <a href="/duplicatefinder-pro.html">DuplicateFinder Pro</a>
+          <a href="/download.html">Download &amp; verify</a>
+        </div>
+        <div class="foot-col">
+          <h4>Guides</h4>
+          <a href="/verify-card-copy-before-formatting.html">Verify a card copy before formatting</a>
+          <a href="/duplicate-finder-lightroom-catalog.html">Duplicate finders and Lightroom</a>
+          <a href="/find-duplicate-photos-two-external-drives.html">Duplicates across two external drives</a>
+          <a href="/remove-duplicate-photos-without-deleting-originals.html">Removing duplicates without deleting</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Suggest a feature</a>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=bug" target="_blank" rel="noopener">Report a bug</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="/origin-story.html">Why it exists</a>
+          <a href="mailto:support@almaze.tools">Email us</a>
+          <a href="https://github.com/Fellh/almaze-tools" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <span>Amharic for diamond.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What each one does\n          \n            Flag for Deletion marks a row. It does not touch the file. Despite the name, nothing is deleted and nothing has moved.\n            Move Flagged to Quarantine moves the marked files into a quarantine folder on their own drive and records where each came from.\n            Move Selected to Quarantine does the same for rows you've highlighted, skipping the flagging step.\n            Emptying quarantine is the only action that permanently removes anything, and it's yours alone to take.\n          \n        \n        \n          What quarantine costs\n          \n            It moves rather than copies, so holding files uses no extra space.\n            The honest trade: the space isn't reclaimed either, until you empty it.\n            Files are re-checked against the copy being kept at the moment they move, not just when the scan ran. Anything changed in between is skipped and named.\n            Identical filenames from different drives get unique names in quarantine, each keeping its own recorded origin.\n          \n        \n      \n    \n\n    \n      The 24 hours, and putting things back\n      Quarantined files carry a 24-hour hold. Use it. Open your archive in whatever you actually work in \u2014 Lightroom, Bridge, Explorer \u2014 and look at it properly before emptying anything. The moment you regret a cleanup is almost always the moment after it finishes.\n      Restore is one click and returns each file to its exact original location. If a file's origin is on a drive that isn't connected, the app names that drive, leaves the file safely in quarantine, and offers to continue with the rest \u2014 it won't redirect anything to a path that merely looks close enough. Each file is written in full before its quarantine record clears, so an interrupted restore can't leave a half-written file in your archive.\n      Restore is never locked. Not without a licence, and not after a refund. Files this software moved are always files you can move back.\n    \n\n    \n      Questions\n      \n        \n          Can I do this without buying anything?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Scanning, the Storage Map and the full CSV and HTML reports are free, with no account. You can run every scan on this page and see exactly what was found and how much space it would recover. The $34 licence is only needed to move flagged files into quarantine."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is anything deleted automatically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Nothing is deleted at any point by the software. Flagged files are moved to a quarantine folder on the same drive and recorded. Emptying quarantine is a separate action you take yourself, and restore and permanent delete are never locked behind the licence."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I quarantine something Lightroom has catalogued?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Lightroom will show it as missing until you restore it, which takes one click within the 24-hour hold or after it. The app excludes Lightroom's own working folders from scanning but has no knowledge of which photos are catalogued \u2014 catalog awareness is planned, not shipped."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does it say \"Flag for Deletion\" if nothing gets deleted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Flagging marks rows so they can be moved in bulk afterwards; the file is untouched until you click Move Flagged to Quarantine, and quarantine is a folder rather than a bin. The label is more alarming than the behaviour."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it find duplicates of documents or music?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It looks at RAW photos, exported JPGs, MOV and MP4 video and GoPro WAV audio, and ignores everything else on the drive. It is not a general-purpose duplicate file cleaner \u2014 it is built for the one archive where a wrong deletion is unrecoverable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a scan take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the archive, but the staged tests mean most files are eliminated on size alone without ever being read. A multi-terabyte pass can run for hours; it's checkpointed, so it can be paused and resumed rather than restarted."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to remove duplicate photos without deleting the originals",
+  "description": "Identify duplicate photos by file content and move them to a quarantine folder with a 24-hour hold and one-click restore, rather than deleting them.",
+  "totalTime": "PT1H",
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "DuplicateFinder Pro for Windows"
+    }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Verify the installer",
+      "text": "Compare the installer's SHA-256 hash against the value published on the download page using Get-FileHash in PowerShell."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Install past the unsigned-publisher warnings",
+      "text": "Choose Keep in the browser, then More info and Run anyway at the SmartScreen prompt, then allow administrator permission to install."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Set the scan target",
+      "text": "Choose a folder or a whole drive root under Scan Target, or use the Folder Duplicates tab to compare two or more locations."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Choose which file types to scan",
+      "text": "Enable RAW photos, exported JPGs, raw video, rendered video or GoPro audio individually in the left rail."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Run the scan",
+      "text": "Files are compared by size, then by a partial fingerprint, then by a full read of the file. Only a full content match is reported as a duplicate."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Read the results and export the report",
+      "text": "Each row names its role, size, folder and which test matched it. Export the CSV report before moving anything."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Move files to quarantine rather than deleting them",
+      "text": "Flagging marks rows without touching the files. Move Flagged to Quarantine moves them to a quarantine folder on the same drive, recording each file's origin."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Check your archive during the 24-hour hold",
+      "text": "Open the archive in your usual software and confirm it is correct. Restore returns each file to its exact original location with one click, and is never locked behind a licence."
+    }
+  ]
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94e8b447de704cce9bfb77ae229d62cb"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
