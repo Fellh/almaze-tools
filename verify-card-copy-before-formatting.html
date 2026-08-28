@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Check Photos Copied Before Formatting a Memory Card</title>
+<meta name="description" content="A finished progress bar is not proof. Why file count, folder size and matching filenames don't confirm a card dump landed, and how to verify by file content for free before you format.">
+<link rel="canonical" href="https://almaze.tools/verify-card-copy-before-formatting.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Almaze">
+<meta property="og:url" content="https://almaze.tools/verify-card-copy-before-formatting.html">
+<meta property="og:title" content="Did the photos actually copy before I format the card?">
+<meta property="og:description" content="Why file count, folder size and matching filenames don't prove a card dump landed — and how to verify by file content for free, using a tool already built into Windows.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Did the photos actually copy before I format the card?">
+<meta name="twitter:description" content="Why file count, folder size and matching filenames don't prove a card dump landed — and how to verify by file content for free, using a tool already built into Windows.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--ice); outline-offset:3px; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:110px 0; }
+  @media (max-width:640px){ section{ padding:72px 0; } .wrap{ padding:0 20px; } }
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  footer{ padding:60px 0 48px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
+  .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .foot-col h4{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink); font-size:0.9rem; margin-bottom:9px; opacity:0.85; }
+  .foot-col a:hover{ opacity:1; color:var(--gold-soft); }
+  .foot-bottom{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  .panel{
+    border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:36px;
+  }
+  .panel + .panel{ margin-top:18px; }
+  .panel h2{ font-size:1.6rem; margin-bottom:10px; }
+  .panel p.sub{ color:var(--ink-dim); max-width:62ch; margin:0 0 28px; }
+  .quiet{ color:var(--ink-dim); font-size:0.92rem; }
+  code{ font-family:'IBM Plex Mono', monospace; font-size:0.86em; color:var(--ice); }
+
+  /* ══ Article page ═════════════════════════════════════════════
+     This page answers a question someone types while worried.
+     The answer goes first, in full, before any explanation —
+     making an anxious reader scroll for the verdict is a way of
+     holding their attention hostage.
+     ═══════════════════════════════════════════════════════════ */
+  /* Same shorthand issue as the other heroes: sides left to .wrap. */
+  .art-hero{ padding-top:80px; padding-bottom:0; }
+  .art-hero h1{
+    font-size:clamp(2rem, 4.6vw, 3rem);
+    line-height:1.12; letter-spacing:-0.01em;
+    margin:14px 0 26px; max-width:22ch;
+  }
+  .art-hero h1 em{ color:var(--gold-soft); font-style:italic; }
+
+  /* The short answer, set apart. Ice = verified fact on this site. */
+  .answer{
+    border:1px solid var(--ice); border-left:3px solid var(--ice);
+    border-radius:3px; background:rgba(191,230,242,0.04);
+    padding:26px 30px; max-width:70ch;
+  }
+  .answer p{ margin:0 0 14px; font-size:1.05rem; }
+  .answer p:last-child{ margin-bottom:0; }
+  .answer strong{ color:var(--ice); }
+
+  .prose{ max-width:68ch; }
+  .prose h2{ font-size:1.75rem; margin:0 0 14px; }
+  .prose h3{ font-size:1.12rem; margin:30px 0 8px; }
+  .prose p{ color:var(--ink-dim); margin:0 0 18px; }
+  .prose p.lead{ color:var(--ink); }
+  .prose ul{ color:var(--ink-dim); padding-left:20px; margin:0 0 18px; }
+  .prose li{ margin-bottom:9px; }
+  .prose a{ color:var(--ice); }
+  .block{ margin-bottom:64px; }
+  .block:last-child{ margin-bottom:0; }
+
+  /* Two-column fact split: what lives where */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0 0; }
+  .split > div{
+    border:1px solid var(--line); border-radius:4px;
+    background:var(--bg-base); padding:24px;
+  }
+  .split h3{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 14px; font-weight:400;
+  }
+  .split ul{ margin:0; padding-left:18px; color:var(--ink); font-size:0.94rem; }
+  .split li{ margin-bottom:8px; }
+  @media (max-width:760px){ .split{ grid-template-columns:1fr; } }
+
+  /* Numbered walkthrough */
+  ol.walk{ counter-reset:w; list-style:none; margin:0; padding:0; }
+  ol.walk li{
+    counter-increment:w; position:relative;
+    padding:0 0 0 46px; margin-bottom:26px;
+  }
+  ol.walk li:last-child{ margin-bottom:0; }
+  ol.walk li::before{
+    content:counter(w, decimal-leading-zero);
+    position:absolute; left:0; top:2px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    color:var(--ice); letter-spacing:0.08em;
+  }
+  ol.walk strong{ display:block; margin-bottom:5px; }
+  ol.walk span{ color:var(--ink-dim); font-size:0.95rem; }
+
+  .faq div{ padding:22px 0; border-bottom:1px solid var(--line); }
+  .faq div:last-child{ border-bottom:none; padding-bottom:0; }
+  .faq h3{ font-size:1.08rem; margin:0 0 8px; }
+  .faq p{ color:var(--ink-dim); font-size:0.95rem; margin:0; max-width:70ch; }
+
+  @media (max-width:640px){
+    .panel{ padding:24px; }
+    .answer{ padding:22px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+    .btn:hover{ transform:none; }
+  }
+
+  /* Code block for the free PowerShell method. Monospace already loaded
+     for .eyebrow; ice is this site's colour for verified fact. */
+  pre.code{
+    background:var(--bg-base); border:1px solid var(--line);
+    border-left:3px solid var(--ice); border-radius:3px;
+    padding:20px 22px; overflow-x:auto; margin:0 0 18px;
+  }
+  pre.code code{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    color:var(--ink); line-height:1.7; white-space:pre;
+  }
+  @media (max-width:640px){ pre.code{ padding:16px; } pre.code code{ font-size:0.74rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="/duplicatefinder-pro.html">Tools</a>
+      <a href="/download.html">Download</a>
+      <a href="/origin-story.html">Story</a>
+      <a href="mailto:support@almaze.tools">Help</a>
+    </div>
+  </div>
+</nav>
+
+<header class="art-hero wrap">
+  <p class="eyebrow">Before you format the card</p>
+  <h1>Did the photos <em>actually</em> copy before I format?</h1>
+
+  <div class="answer">
+    <p><strong>Short answer: a finished progress bar is not proof, and neither is a matching file count or a matching folder size. The only thing that proves a copy is a copy is comparing the contents of the files.</strong></p>
+    <p>You can do that for free, today, with a tool already built into Windows. No download and no purchase. The walkthrough is further down this page, and it works whether or not you ever use anything of ours.</p>
+    <p>Formatting a card is irreversible in a way almost nothing else in this workflow is. Ten minutes of checking is cheap against that.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap prose">
+
+    <div class="block">
+      <h2>Why a finished copy can still be incomplete</h2>
+      <p class="lead">Most copies succeed. That's exactly what makes the failures dangerous — you stop expecting them, and the ones that do happen tend to be quiet.</p>
+      <p>Here is what actually goes wrong, in rough order of how often photographers hit it:</p>
+
+      <h3>Two cameras wrote the same filename</h3>
+      <p>This is the big one, and it has nothing to do with faulty hardware. Cameras number files sequentially and reset those counters. Two bodies at the same event will both happily produce <code>DSC_0001</code>, <code>IMG_0047</code>, <code>GX010023</code>. Copy both cards into one folder and Windows asks whether to replace, skip, or keep both. Click the wrong button once, at the end of a fourteen-hour day, and you have silently overwritten one camera's frames with another's. The copy reports success because, from the operating system's point of view, it was a success.</p>
+
+      <h3>The transfer was interrupted</h3>
+      <p>A reader that loses contact, a laptop that sleeps, a cable nudged with a knee. Depending on where it stopped, you can be left with a file that has the right name and a partial body. It appears in the folder listing. It opens as a thumbnail. It is not the whole photograph.</p>
+
+      <h3>Something was skipped and you didn't see it</h3>
+      <p>Windows sometimes reports skipped items in a collapsed summary you have to expand. A permissions issue, a filename length problem, a locked file, a subfolder that wasn't included in the drag. The dialog closes and the count of what didn't make it goes with it.</p>
+
+      <h3>The card itself is starting to fail</h3>
+      <p>Flash memory wears out. A card near end of life can return read errors on specific files while the rest of it behaves perfectly. Some copy tools stop, some skip, some copy whatever they got.</p>
+
+      <p>None of these are common. All of them are silent. And formatting is the one action in this workflow with no undo.</p>
+    </div>
+
+    <div class="block">
+      <h2>Why file count doesn't prove it</h2>
+      <p>Counting files on the card and counting files in the archive folder feels like verification. It is a useful smoke test and nothing more.</p>
+      <p>The filename collision case defeats it directly: if two cameras produced twelve colliding names and you chose "replace" for all of them, your archive is short twelve photographs — but it is also short twelve <em>files</em>, so the count simply looks different and you may well assume you miscounted a card.</p>
+      <p>Worse, counts can match while contents don't. Cameras write companion files: <code>.THM</code> thumbnails, <code>.LRV</code> low-resolution proxies, <code>.XMP</code> sidecars, GoPro's separate <code>.WAV</code> audio. Between a card and an organised event folder, those get added, dropped and reorganised constantly. Two numbers landing on the same total tells you the totals match. It tells you nothing about which files.</p>
+    </div>
+
+    <div class="block">
+      <h2>Why total size doesn't prove it either</h2>
+      <p>Comparing folder sizes is a better smoke test than counting, because a truncated file usually does change the total. But it still isn't proof, for two reasons.</p>
+      <p>First, Windows reports two different numbers — "Size" and "Size on disk" — and the second depends on the cluster size of the filesystem, which differs between a card formatted exFAT and an archive drive formatted NTFS. The same files will legitimately report different totals on the two volumes. People see the mismatch, decide it's a formatting artefact, and stop looking. Sometimes they're right.</p>
+      <p>Second, and more importantly: size is an aggregate. It can only ever tell you that something, somewhere, is different. It cannot tell you <em>which file</em>, and it cannot rule out the case where one file grew and another shrank.</p>
+    </div>
+
+    <div class="block">
+      <h2>Why matching filenames prove the least of all</h2>
+      <p class="lead">Of the three, this is the one that actively causes damage rather than merely failing to prevent it.</p>
+      <p>We know because we built it that way first. The earliest version of what became DuplicateFinder Pro matched files by name. Run against one real event folder, that approach produced <strong>349 false positives</strong> — files it confidently called duplicates that were nothing of the kind, just similarly numbered frames from different moments of a ceremony. Acting on that output would have meant deleting irreplaceable footage of a baptism because two cameras happened to share a naming convention.</p>
+      <p>The failure runs in both directions. Identical names on non-identical files, and identical files under different names — the same photograph exported twice, or copied into an organised folder and renamed on the way in. A name is a label a human or a camera attached to a file. It carries no information about what is inside.</p>
+      <p>Filenames lie. Content doesn't.</p>
+    </div>
+
+    <div class="block">
+      <h2>What actually proves it: comparing contents</h2>
+      <p>The only verification that means anything is reading both files and confirming they are byte-for-byte identical. In practice you don't compare the files directly — you compute a <em>hash</em> of each one.</p>
+      <p>A hash function reads every byte of a file and produces a short fixed-length fingerprint. Change a single bit anywhere and the fingerprint changes completely. Two files with the same SHA-256 hash are, for every practical purpose, the same file — regardless of what they're named, where they live, or when they were written.</p>
+      <p>So the question "did every photo on this card make it into my archive?" becomes a question you can actually answer: <em>is every hash from the card present somewhere in the archive?</em></p>
+    </div>
+
+    <div class="block">
+      <h2>How to check it yourself, free</h2>
+      <p class="lead">Windows has had this built in since PowerShell 4. You don't need to install anything, and you don't need our software.</p>
+      <p>Open PowerShell (press Start, type <code>powershell</code>, press Enter) and paste the following, changing the two paths to your card and your archive folder:</p>
+
+      <pre class="code"><code>$card    = Get-ChildItem -Path 'E:\DCIM' -Recurse -File | Get-FileHash
+$archive = Get-ChildItem -Path 'D:\Events\Smith Wedding' -Recurse -File | Get-FileHash
+
+$archiveHashes = $archive.Hash
+$missing = $card | Where-Object { $archiveHashes -notcontains $_.Hash }
+
+"Files on card:      " + $card.Count
+"Not found in archive: " + $missing.Count
+$missing | Select-Object Path</code></pre>
+
+      <p>If the second number is <strong>0</strong>, every single file on that card exists somewhere inside your archive folder, verified by content. Names don't matter. Folder structure doesn't matter. You are safe to format.</p>
+      <p>If it isn't zero, the last line prints exactly which files are missing, and you can go look at them before doing anything irreversible.</p>
+
+      <h3>What to expect when you run it</h3>
+      <ul>
+        <li>It reads every byte of both locations, so it is not instant. A 128 GB card over USB 3 typically takes fifteen to thirty minutes. A multi-terabyte archive takes hours.</li>
+        <li>It checks one direction only — card into archive — which is the correct direction for this question.</li>
+        <li>It will report zero even if the archive also contains a thousand other files. That's the point.</li>
+      </ul>
+
+      <h3>Going forward, verify during the copy</h3>
+      <p>Checking after the fact is the right move when the copy already happened. For future card dumps, a copy tool that verifies as it writes removes the question entirely. <a href="https://www.codesector.com/teracopy" target="_blank" rel="noopener">TeraCopy</a> is free for personal use and does exactly this. It is not our software and we get nothing if you use it.</p>
+    </div>
+
+    <div class="block">
+      <h2>Where the free method runs out</h2>
+      <p class="lead">The PowerShell approach above genuinely answers the question on this page. It stops being practical in three situations, and it's worth being clear about which.</p>
+
+      <div class="split">
+        <div>
+          <h3>It handles this fine</h3>
+          <ul>
+            <li>One card against one event folder</li>
+            <li>A yes-or-no answer before formatting</li>
+            <li>Anything you can leave running while you eat</li>
+            <li>Occasional checks, a few times a month</li>
+          </ul>
+        </div>
+        <div>
+          <h3>It struggles with this</h3>
+          <ul>
+            <li>Comparing two whole drives, where it will read every byte with no early exit</li>
+            <li>An interrupted run, which starts over from nothing</li>
+            <li>Deciding which of several copies to keep and removing the rest</li>
+            <li>Matching a RAW to its exported JPG, which are not byte-identical</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top:26px;">That second column is the gap. Hashing every file on two multi-terabyte drives is enormously wasteful, because most files can be ruled out without reading them at all — anything with a unique size cannot possibly have a match.</p>
+    </div>
+
+    <div class="block">
+      <h2>What DuplicateFinder Pro does about it</h2>
+      <p>It runs the same content comparison, in three stages, cheapest first.</p>
+
+      <ol class="walk">
+        <li><strong>Size</strong><span>Files of different sizes cannot be identical, so they are never read. This eliminates the overwhelming majority of an archive before a single byte of content is touched.</span></li>
+        <li><strong>Partial fingerprint</strong><span>The first and last megabyte of each surviving file are hashed. Anything differing near its head or tail is separated out without reading the middle.</span></li>
+        <li><strong>Full MD5 of the whole file</strong><span>Only what remains is read end to end. Nothing is ever reported as a duplicate on a size or fingerprint match alone.</span></li>
+      </ol>
+
+      <p style="margin-top:26px;">That ladder is why a multi-terabyte comparison finishes at all. Scans checkpoint at phase boundaries, so an interrupted run resumes instead of restarting. And nothing is deleted: flagged files move to a quarantine folder on the same drive with a 24-hour hold and one-click restore to their exact original path.</p>
+      <p><strong>Scanning and the full reports are free and require no account.</strong> You can point it at a card and an event folder, get the same answer this page describes, and never pay anything. A licence is only needed to move files into quarantine.</p>
+      <div class="cta-row" style="margin-top:26px;">
+        <a class="btn btn-gold" href="/download.html">Scan your archive free &rarr;</a>
+        <a class="btn btn-ghost" href="/duplicatefinder-pro.html">What it does</a>
+      </div>
+      <p class="quiet" style="margin-top:16px;">Windows 10 and 11. RAF, CR3, CR2, NEF, ARW, DNG, JPG, MOV, MP4 and GoPro WAV.</p>
+    </div>
+
+    <div class="block faq">
+      <h2 style="margin-bottom:20px;">Related questions</h2>
+
+      <div>
+        <h3>Is it safe to format the card in the camera rather than in Windows?</h3>
+        <p>Formatting in the camera is generally the better habit, because it writes the folder structure the camera expects. But that's a separate question from whether your photos are safe. Verify first, then format wherever you prefer.</p>
+      </div>
+
+      <div>
+        <h3>Do I need to verify if I copied to two drives?</h3>
+        <p>Two copies is meaningfully safer than one, and it protects you against a drive failing later. It does not protect you against a copy that was incomplete in the same way twice, which is exactly what happens with a filename collision or a card that is failing to read a particular file.</p>
+      </div>
+
+      <div>
+        <h3>Why SHA-256 in the PowerShell example and MD5 in the application?</h3>
+        <p>SHA-256 is the default for Windows' built-in command, so the example uses it without needing an extra argument. MD5 is faster and is the right trade for scanning terabytes, where the concern is accidental corruption rather than someone deliberately constructing a collision.</p>
+      </div>
+
+      <div>
+        <h3>Can I check a folder against a whole drive instead of a card?</h3>
+        <p>Yes. The method is identical — the two paths are just folders, and either one can be a drive root. Be aware that hashing an entire drive with the PowerShell approach reads every byte of it, which is where a staged comparison becomes worth having.</p>
+      </div>
+
+      <div>
+        <h3>What if a file is missing from the archive but I already formatted the card?</h3>
+        <p>Stop writing to the card immediately and look into photo recovery software. Deleted data usually remains on the card until it is overwritten, so the sooner you stop using it, the better your odds. That is a different kind of tool than this one, and we don't make it.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="wordmark" style="font-size:1.1rem;">ALMA<em>Z</em>E</p>
+        <p>Small-batch software, built out of real production
+           work — not written speculatively.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Tools</h4>
+          <a href="/duplicatefinder-pro.html">DuplicateFinder Pro</a>
+          <a href="/download.html">Download &amp; verify</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Suggest a feature</a>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=bug" target="_blank" rel="noopener">Report a bug</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="/origin-story.html">Why it exists</a>
+          <a href="mailto:support@almaze.tools">Email us</a>
+          <a href="https://github.com/Fellh/almaze-tools" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <span>Amharic for diamond.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it safe to format the card in the camera rather than in Windows?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Formatting in the camera is generally the better habit, because it writes the folder structure the camera expects. But that is a separate question from whether your photos are safe. Verify first, then format wherever you prefer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to verify if I copied to two drives?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two copies is meaningfully safer than one, and it protects you against a drive failing later. It does not protect you against a copy that was incomplete in the same way twice, which is exactly what happens with a filename collision or a card that is failing to read a particular file."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why SHA-256 in the PowerShell example and MD5 in the application?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SHA-256 is the default for the built-in Windows command, so the example uses it without needing an extra argument. MD5 is faster and is the right trade for scanning terabytes, where the concern is accidental corruption rather than a deliberately constructed collision."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I check a folder against a whole drive instead of a card?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The method is identical, since the two paths are just folders and either one can be a drive root. Be aware that hashing an entire drive with the PowerShell approach reads every byte of it, which is where a staged comparison becomes worth having."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if a file is missing from the archive but I already formatted the card?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Stop writing to the card immediately and look into photo recovery software. Deleted data usually remains on the card until it is overwritten, so the sooner you stop using it, the better your odds."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to verify photos copied from a memory card before formatting it",
+  "description": "Confirm by file content, not by filename, count or folder size, that every photo on a memory card exists in your archive before formatting the card.",
+  "totalTime": "PT30M",
+  "tool": [
+    { "@type": "HowToTool", "name": "Windows PowerShell" }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Open PowerShell",
+      "text": "Press Start, type powershell and press Enter."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Hash every file on the card and in the archive",
+      "text": "Run Get-ChildItem with -Recurse -File piped into Get-FileHash for both the memory card path and the archive folder path."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Compare the two sets of hashes",
+      "text": "Filter the card's hashes for any that do not appear in the archive's set of hashes."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Read the result",
+      "text": "If the count of missing files is zero, every file on the card exists in the archive verified by content and the card is safe to format. If it is not zero, the listed paths identify exactly which files are missing."
+    }
+  ]
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94e8b447de704cce9bfb77ae229d62cb"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
