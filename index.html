@@ -26,9 +26,14 @@
   "sameAs": ["https://github.com/Fellh/almaze-tools"]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Fonts load off the critical path. The preload fetches the stylesheet at high
+     priority; media="print" keeps it from blocking the first paint, and onload
+     promotes it. Text appears immediately in the fallback stack defined below,
+     then swaps to Fraunces / Work Sans when they arrive. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <style>
   :root{
     --bg-base:   #0B0D10;
@@ -48,13 +53,13 @@
     margin:0;
     background:var(--bg-base);
     color:var(--ink);
-    font-family:'Work Sans', sans-serif;
+    font-family:'Work Sans', 'Segoe UI', system-ui, sans-serif;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:500; margin:0; }
   .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace;
     font-size:0.72rem;
     letter-spacing:0.14em;
     text-transform:uppercase;
@@ -79,7 +84,7 @@
     border-bottom:1px solid var(--line);
   }
   nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
-  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
   .wordmark em{ color:var(--gold); font-style:normal; }
   .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
   .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
@@ -133,7 +138,7 @@
   .btn{
     display:inline-flex; align-items:center; gap:8px;
     padding:13px 26px; border-radius:3px;
-    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.82rem;
     letter-spacing:0.04em; text-decoration:none;
     border:1px solid transparent; cursor:pointer;
     transition:transform .15s, border-color .15s, background .15s;
@@ -165,11 +170,11 @@
   .facet-card.dim .facet-glyph{
     background:linear-gradient(150deg, #33383F, #22262C 55%, #14171B);
   }
-  .facet-num{ font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--gold); letter-spacing:0.1em; }
+  .facet-num{ font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.72rem; color:var(--gold); letter-spacing:0.1em; }
   .facet-card.dim .facet-num{ color:var(--ink-dim); }
   .facet-body h3{ font-size:1.35rem; margin:6px 0 8px; }
   .facet-body p{ color:var(--ink-dim); font-size:0.95rem; max-width:480px; margin:0 0 10px; }
-  .facet-meta{ font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--ink-dim); }
+  .facet-meta{ font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.76rem; color:var(--ink-dim); }
   @media (max-width:700px){
     .facet-card{ grid-template-columns:64px 1fr; }
     .facet-card .btn{ grid-column:1 / -1; justify-self:start; }
@@ -179,7 +184,7 @@
   .story{ background:var(--bg-panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .story .wrap{ text-align:center; max-width:700px; }
   .story blockquote{
-    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:500;
     font-size:clamp(1.5rem, 3.4vw, 2.1rem);
     color:var(--gold-soft); margin:20px 0 26px; line-height:1.3;
   }
@@ -191,7 +196,7 @@
   .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
   .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
   .foot-col h4{
-    font-family:'IBM Plex Mono', monospace; font-size:0.7rem;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.7rem;
     letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
     margin:0 0 12px; font-weight:400;
   }
@@ -201,6 +206,23 @@
     margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
     font-size:0.8rem; color:var(--ink-dim);
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  /* ── Field notes ──────────────────────────────────────────── */
+  .notes-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:700px){ .notes-grid{ grid-template-columns:1fr; } }
+  .note{
+    display:block; text-decoration:none;
+    padding:28px; border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    transition:border-color .18s, transform .15s;
+  }
+  .note:hover{ border-color:var(--ink-dim); transform:translateY(-1px); }
+  .note h3{ font-size:1.15rem; margin-bottom:8px; }
+  .note p{ color:var(--ink-dim); font-size:0.94rem; margin:0 0 14px; }
+  .note-go{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace;
+    font-size:0.76rem; color:var(--gold); letter-spacing:0.04em;
   }
 </style>
 </head>
@@ -287,6 +309,36 @@
   </div>
 </section>
 
+<!-- ── Field notes ───────────────────────────────────────────────
+     Both guide pages were previously reachable only by typing the URL.
+     Sitemap entries get crawled; internal links get weighted. This
+     section is the homepage's path in to them.
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="notes" style="padding-top:0;">
+  <div class="wrap">
+    <p class="eyebrow">Field notes</p>
+    <h2 style="font-size:2rem; margin:10px 0 14px;">Answers to the questions that come first</h2>
+    <p style="color:var(--ink-dim); max-width:60ch; margin:0 0 32px;">
+      Written for the moment before you commit — before you format the card,
+      before you let anything near your catalog.</p>
+
+    <div class="notes-grid">
+      <a class="note" href="/verify-card-copy-before-formatting.html">
+        <h3>How to verify a card copy before formatting</h3>
+        <p>Confirming every frame reached the drive, without trusting file
+           counts or your memory of the transfer.</p>
+        <span class="note-go">Read it &rarr;</span>
+      </a>
+      <a class="note" href="/duplicate-finder-lightroom-catalog.html">
+        <h3>Will a duplicate finder break my Lightroom catalog?</h3>
+        <p>What actually happens to a catalogued photo when a deduplicator
+           moves it, and how to put it back.</p>
+        <span class="note-go">Read it &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <section class="story" id="story">
   <div class="wrap">
     <p class="eyebrow">Why it exists</p>
@@ -313,6 +365,11 @@
         <div class="foot-col">
           <h4>Tools</h4>
           <a href="#facets">DuplicateFinder Pro</a>
+        </div>
+        <div class="foot-col">
+          <h4>Guides</h4>
+          <a href="/verify-card-copy-before-formatting.html">Verify a card copy before formatting</a>
+          <a href="/duplicate-finder-lightroom-catalog.html">Duplicate finders and Lightroom</a>
         </div>
         <div class="foot-col">
           <h4>Support</h4>

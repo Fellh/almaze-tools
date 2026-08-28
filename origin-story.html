@@ -14,9 +14,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Why I built DuplicateFinder Pro">
 <meta name="twitter:description" content="The origin story behind DuplicateFinder Pro — built by a working event photographer after one too many eight-camera shoot days.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Fonts load off the critical path. The preload fetches the stylesheet at high
+     priority; media="print" keeps it from blocking the first paint, and onload
+     promotes it. Text appears immediately in the fallback stack defined below,
+     then swaps to Fraunces / Work Sans when they arrive. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 <style>
   :root{
     --bg-base:   #0B0D10;
@@ -36,13 +41,13 @@
     margin:0;
     background:var(--bg-base);
     color:var(--ink);
-    font-family:'Work Sans', sans-serif;
+    font-family:'Work Sans', 'Segoe UI', system-ui, sans-serif;
     line-height:1.7;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:500; margin:0; }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:500; margin:0; }
   .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace;
     font-size:0.72rem;
     letter-spacing:0.14em;
     text-transform:uppercase;
@@ -65,7 +70,7 @@
     border-bottom:1px solid var(--line);
   }
   nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
-  .wordmark{ font-family:'Fraunces', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
   .wordmark em{ color:var(--gold); font-style:normal; }
   .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
   .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
@@ -87,11 +92,11 @@
   .prose strong{ color:var(--gold-soft); font-weight:600; }
   .prose em{ font-style:italic; }
   .prose .lead{
-    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-style:italic; font-weight:500;
     font-size:1.4rem; color:var(--gold-soft); margin-bottom:34px; line-height:1.4;
   }
   .prose .beat{
-    font-family:'Fraunces', serif; font-style:italic;
+    font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-style:italic;
     color:var(--ink); font-size:1.15rem; margin:0 0 26px;
   }
   hr.rule{ border:none; border-top:1px solid var(--line); margin:48px 0; }
@@ -109,7 +114,7 @@
   .btn{
     display:inline-flex; align-items:center; gap:8px;
     padding:13px 26px; border-radius:3px;
-    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.82rem;
     letter-spacing:0.04em; text-decoration:none;
     border:1px solid transparent; cursor:pointer;
     transition:transform .15s, border-color .15s, background .15s;
