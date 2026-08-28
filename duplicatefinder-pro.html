@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find Duplicate Photos and Videos Across Two Drives — DuplicateFinder Pro</title>
-<meta name="description" content="Compare two folders — or two entire drives — and find the photos, RAW files and videos that are identical inside. By content, not filename. Windows.">
+<title>Duplicate RAW, JPG &amp; Video Finder for Windows — DuplicateFinder Pro</title>
+<meta name="description" content="Find duplicate RAW files, JPGs and videos across two folders or two entire drives. Matched by content, not filename. Nothing is deleted — flagged files go to quarantine with a 24-hour hold. Windows, $34 one-time.">
 <link rel="canonical" href="https://almaze.tools/duplicatefinder-pro.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Almaze">
 <meta property="og:url" content="https://almaze.tools/duplicatefinder-pro.html">
-<meta property="og:title" content="Find duplicate photos and videos across two drives">
+<meta property="og:title" content="Find duplicate photos, RAW files and videos across two drives">
 <meta property="og:description" content="Compare two folders — or two entire drives — and find the files that are byte-for-byte identical inside. Nothing is deleted: flagged files go to quarantine with a 24-hour hold and one-click restore.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Find duplicate photos and videos across two drives">
+<meta name="twitter:title" content="Find duplicate photos, RAW files and videos across two drives">
 <meta name="twitter:description" content="Compare two folders — or two entire drives — and find the files that are byte-for-byte identical inside. Nothing is deleted: flagged files go to quarantine with a 24-hour hold and one-click restore.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -145,9 +145,17 @@
   .pp-hero h1{
     font-size:clamp(2.1rem, 5vw, 3.2rem);
     line-height:1.1; letter-spacing:-0.01em;
-    margin:14px 0 20px; max-width:19ch;
+    margin:14px 0 14px; max-width:24ch;
   }
   .pp-hero h1 em{ color:var(--gold-soft); font-style:italic; }
+  /* The old H1 lives here now. The heading has to carry the words a
+     buyer types into a search box; this line carries the hook. */
+  .pp-hero p.deck{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-size:clamp(1.25rem, 2.4vw, 1.6rem);
+    color:var(--gold-soft); line-height:1.3;
+    margin:0 0 22px; max-width:26ch;
+  }
   .pp-hero p.lede{ color:var(--ink-dim); font-size:1.08rem; max-width:60ch; margin:0 0 30px; }
   .pp-hero .cta-note{ margin-top:16px; }
 
@@ -267,13 +275,14 @@
 
 <header class="pp-hero wrap">
   <p class="eyebrow">DuplicateFinder Pro · Windows</p>
-  <h1>The same photos are on <em>both</em> drives. Which ones?</h1>
+  <h1>Find duplicate photos, RAW files and videos across two drives</h1>
+  <p class="deck">The same photos are on <em>both</em> drives. Which ones?</p>
   <p class="lede">Point DuplicateFinder Pro at two folders — or two entire drives — and it tells you which files are genuinely identical inside, byte for byte, no matter what either folder is named or when it was copied. Then it moves the extra copies to quarantine, where you have 24 hours and one click to change your mind.</p>
   <div class="cta-row">
-    <a class="btn btn-gold" href="https://almaze7.gumroad.com/l/duplicatefinder-pro/FOUNDING34" target="_blank" rel="noopener">Buy DuplicateFinder Pro →</a>
-    <a class="btn btn-ghost" href="#how">How it decides</a>
+    <a class="btn btn-gold" href="/download.html">Scan your archive free →</a>
+    <a class="btn btn-ghost" href="https://almaze7.gumroad.com/l/duplicatefinder-pro/FOUNDING34" target="_blank" rel="noopener">Buy — $34 one-time</a>
   </div>
-  <p class="cta-note">Free to scan and export a full report before you buy. A licence is only needed to move files.</p>
+  <p class="cta-note">Scanning and the full CSV and HTML reports are free, with no account. A licence is only needed to move files into quarantine.</p>
 </header>
 
 <section>
@@ -537,10 +546,16 @@
   "applicationSubCategory": "Duplicate file finder",
   "operatingSystem": "Windows 10, Windows 11",
   "softwareVersion": "1.5",
+  "datePublished": "2026-08-09",
   "url": "https://almaze.tools/duplicatefinder-pro.html",
   "downloadUrl": "https://almaze.tools/download.html",
   "description": "Finds duplicate photos, RAW files and videos across folders and across separate drives by comparing file contents rather than filenames. Flagged files are moved to a 24-hour quarantine with one-click restore rather than deleted.",
   "featureList": [
+    "RAW formats supported: RAF, CR3, CR2, NEF, ARW and DNG",
+    "Video formats supported: MOV and MP4, plus GoPro WAV audio",
+    "Content matching in three stages: size, partial fingerprint, then full MD5",
+    "Lightroom .lrdata and Adobe Premiere working folders excluded from scans",
+    "XMP and ACR sidecar files protected",
     "Compare two or more folders or entire drives for byte-identical files",
     "RAW and exported JPG pairing, including across different folders",
     "Video matching by content only, so GoPro chapter files are not mistaken for duplicates",
@@ -605,6 +620,10 @@
   ]
 }
 </script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94e8b447de704cce9bfb77ae229d62cb"}'></script>
+<!-- End Cloudflare Web Analytics -->
 
 </body>
 </html>
