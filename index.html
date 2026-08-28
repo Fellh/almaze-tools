@@ -209,7 +209,7 @@
   }
 
   /* ── Field notes ──────────────────────────────────────────── */
-  .notes-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .notes-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:18px; }
   @media (max-width:700px){ .notes-grid{ grid-template-columns:1fr; } }
   .note{
     display:block; text-decoration:none;
@@ -335,6 +335,12 @@
            moves it, and how to put it back.</p>
         <span class="note-go">Read it &rarr;</span>
       </a>
+      <a class="note" href="/find-duplicate-photos-two-external-drives.html">
+        <h3>Finding duplicates across two external drives</h3>
+        <p>Which photos are on both drives, which are on only one, and the
+           order of operations that keeps the old drive safe.</p>
+        <span class="note-go">Read it &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -370,6 +376,7 @@
           <h4>Guides</h4>
           <a href="/verify-card-copy-before-formatting.html">Verify a card copy before formatting</a>
           <a href="/duplicate-finder-lightroom-catalog.html">Duplicate finders and Lightroom</a>
+          <a href="/find-duplicate-photos-two-external-drives.html">Duplicates across two external drives</a>
         </div>
         <div class="foot-col">
           <h4>Support</h4>

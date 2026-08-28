@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Find Duplicate Photos Across Two External Hard Drives</title>
+<meta name="description" content="Two archive drives with overlapping copies of the same shoots. Why names, dates and folder sizes can't tell you which photos are on both — and how to compare two drives by file content, free, before you wipe either one.">
+<link rel="canonical" href="https://almaze.tools/find-duplicate-photos-two-external-drives.html">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Almaze">
+<meta property="og:url" content="https://almaze.tools/find-duplicate-photos-two-external-drives.html">
+<meta property="og:title" content="Which photos are actually on both of my external drives?">
+<meta property="og:description" content="Names and dates diverge the moment you start copying between drives. How to compare two external drives by content, and the order of operations that keeps the drive you're retiring safe.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Which photos are actually on both of my external drives?">
+<meta name="twitter:description" content="Names and dates diverge the moment you start copying between drives. How to compare two external drives by content, and the order of operations that keeps the drive you're retiring safe.">
+
+<!-- Fonts load off the critical path. The preload fetches the stylesheet at high
+     priority; media="print" keeps it from blocking the first paint, and onload
+     promotes it. Text appears immediately in the fallback stack defined below,
+     then swaps to Fraunces / Work Sans when they arrive. -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+<style>
+  :root{
+    --bg-base:   #0B0D10;
+    --bg-panel:  #14181D;
+    --bg-panel-2:#1B2027;
+    --ink:       #EDEEF0;
+    --ink-dim:   #8B9199;
+    --gold:      #C9A227;
+    --gold-soft: #E4C766;
+    --ice:       #BFE6F2;
+    --line:      #262B32;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-base);
+    color:var(--ink);
+    font-family:'Work Sans', 'Segoe UI', system-ui, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:500; margin:0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--ice); outline-offset:3px; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+  section{ padding:110px 0; }
+  @media (max-width:640px){ section{ padding:72px 0; } .wrap{ padding:0 20px; } }
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,16,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; }
+  .wordmark{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; font-weight:600; font-size:1.25rem; letter-spacing:0.02em; text-decoration:none; }
+  .wordmark em{ color:var(--gold); font-style:normal; }
+  .navlinks{ display:flex; gap:32px; font-size:0.92rem; }
+  .navlinks a{ text-decoration:none; color:var(--ink-dim); transition:color .18s; }
+  .navlinks a:hover{ color:var(--ink); }
+  @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px; border-radius:3px;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.82rem;
+    letter-spacing:0.04em; text-decoration:none;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn-gold{ background:var(--gold); color:#14120A; }
+  .btn-gold:hover{ background:var(--gold-soft); }
+  .btn-ghost{ border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink-dim); }
+  .cta-row{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  footer{ padding:60px 0 48px; }
+  .foot-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .foot-brand p{ color:var(--ink-dim); font-size:0.88rem; max-width:280px; margin:10px 0 0; }
+  .foot-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .foot-col h4{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.7rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 12px; font-weight:400;
+  }
+  .foot-col a{ display:block; text-decoration:none; color:var(--ink); font-size:0.9rem; margin-bottom:9px; opacity:0.85; }
+  .foot-col a:hover{ opacity:1; color:var(--gold-soft); }
+  .foot-bottom{
+    margin-top:52px; padding-top:22px; border-top:1px solid var(--line);
+    font-size:0.8rem; color:var(--ink-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  .panel{
+    border:1px solid var(--line); border-radius:4px;
+    background:linear-gradient(135deg, var(--bg-panel), var(--bg-panel-2));
+    padding:36px;
+  }
+  .panel + .panel{ margin-top:18px; }
+  .panel h2{ font-size:1.6rem; margin-bottom:10px; }
+  .panel p.sub{ color:var(--ink-dim); max-width:62ch; margin:0 0 28px; }
+  .quiet{ color:var(--ink-dim); font-size:0.92rem; }
+  code{ font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.86em; color:var(--ice); }
+
+  /* ══ Article page ═════════════════════════════════════════════
+     This page answers a question someone types while worried.
+     The answer goes first, in full, before any explanation —
+     making an anxious reader scroll for the verdict is a way of
+     holding their attention hostage.
+     ═══════════════════════════════════════════════════════════ */
+  /* Same shorthand issue as the other heroes: sides left to .wrap. */
+  .art-hero{ padding-top:80px; padding-bottom:0; }
+  .art-hero h1{
+    font-size:clamp(2rem, 4.6vw, 3rem);
+    line-height:1.12; letter-spacing:-0.01em;
+    margin:14px 0 26px; max-width:22ch;
+  }
+  .art-hero h1 em{ color:var(--gold-soft); font-style:italic; }
+
+  /* The short answer, set apart. Ice = verified fact on this site. */
+  .answer{
+    border:1px solid var(--ice); border-left:3px solid var(--ice);
+    border-radius:3px; background:rgba(191,230,242,0.04);
+    padding:26px 30px; max-width:70ch;
+  }
+  .answer p{ margin:0 0 14px; font-size:1.05rem; }
+  .answer p:last-child{ margin-bottom:0; }
+  .answer strong{ color:var(--ice); }
+
+  .prose{ max-width:68ch; }
+  .prose h2{ font-size:1.75rem; margin:0 0 14px; }
+  .prose h3{ font-size:1.12rem; margin:30px 0 8px; }
+  .prose p{ color:var(--ink-dim); margin:0 0 18px; }
+  .prose p.lead{ color:var(--ink); }
+  .prose ul{ color:var(--ink-dim); padding-left:20px; margin:0 0 18px; }
+  .prose li{ margin-bottom:9px; }
+  .prose a{ color:var(--ice); }
+  .block{ margin-bottom:64px; }
+  .block:last-child{ margin-bottom:0; }
+
+  /* Two-column fact split: what lives where */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0 0; }
+  .split > div{
+    border:1px solid var(--line); border-radius:4px;
+    background:var(--bg-base); padding:24px;
+  }
+  .split h3{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.68rem;
+    letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-dim);
+    margin:0 0 14px; font-weight:400;
+  }
+  .split ul{ margin:0; padding-left:18px; color:var(--ink); font-size:0.94rem; }
+  .split li{ margin-bottom:8px; }
+  @media (max-width:760px){ .split{ grid-template-columns:1fr; } }
+
+  /* Numbered walkthrough */
+  ol.walk{ counter-reset:w; list-style:none; margin:0; padding:0; }
+  ol.walk li{
+    counter-increment:w; position:relative;
+    padding:0 0 0 46px; margin-bottom:26px;
+  }
+  ol.walk li:last-child{ margin-bottom:0; }
+  ol.walk li::before{
+    content:counter(w, decimal-leading-zero);
+    position:absolute; left:0; top:2px;
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.72rem;
+    color:var(--ice); letter-spacing:0.08em;
+  }
+  ol.walk strong{ display:block; margin-bottom:5px; }
+  ol.walk span{ color:var(--ink-dim); font-size:0.95rem; }
+
+  .faq div{ padding:22px 0; border-bottom:1px solid var(--line); }
+  .faq div:last-child{ border-bottom:none; padding-bottom:0; }
+  .faq h3{ font-size:1.08rem; margin:0 0 8px; }
+  .faq p{ color:var(--ink-dim); font-size:0.95rem; margin:0; max-width:70ch; }
+
+  @media (max-width:640px){
+    .panel{ padding:24px; }
+    .answer{ padding:22px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+    .btn:hover{ transform:none; }
+  }
+
+  /* Code block for the free PowerShell method. Monospace already loaded
+     for .eyebrow; ice is this site's colour for verified fact. */
+  pre.code{
+    background:var(--bg-base); border:1px solid var(--line);
+    border-left:3px solid var(--ice); border-radius:3px;
+    padding:20px 22px; overflow-x:auto; margin:0 0 18px;
+  }
+  pre.code code{
+    font-family:'IBM Plex Mono', Consolas, ui-monospace, monospace; font-size:0.82rem;
+    color:var(--ink); line-height:1.7; white-space:pre;
+  }
+  @media (max-width:640px){ pre.code{ padding:16px; } pre.code code{ font-size:0.74rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="/" class="wordmark">ALMA<em>Z</em>E</a>
+    <div class="navlinks">
+      <a href="/duplicatefinder-pro.html">Tools</a>
+      <a href="/download.html">Download</a>
+      <a href="/origin-story.html">Story</a>
+      <a href="mailto:support@almaze.tools">Help</a>
+    </div>
+  </div>
+</nav>
+
+<header class="art-hero wrap">
+  <p class="eyebrow">Before you retire a drive</p>
+  <h1>How do I find duplicate photos across <em>two</em> external drives?</h1>
+
+  <div class="answer">
+    <p><strong>Short answer: you cannot work this out by looking. Folder names, file dates and directory structures diverged the moment you started copying between the drives. The only question that survives all of that is whether the contents match — and it has to be asked across both drives at once.</strong></p>
+    <p>Scanning both drives and exporting the full report is free, with no account. A licence is only needed to move anything.</p>
+    <p>There is also an order of operations that makes this safe, and it isn't the obvious one. It's further down, under <a href="#order">the safe order</a>. Read that part even if you use something other than our software.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap prose">
+
+    <div class="block">
+      <h2>Why two drives is a harder problem than one</h2>
+      <p class="lead">On a single drive, a duplicate is just wasted space. Across two drives, <em>duplicate</em> and <em>backup</em> are the same word describing the same file, and nothing in the file itself tells you which one you meant.</p>
+      <p>The history is nearly always the same. One drive filled up. You bought a second, larger one and copied some of the first across — probably the folders you were working on, probably not all of them. You kept shooting onto the new drive. Months later you copied a couple of old jobs back the other way because a client resurfaced. Somewhere in there a backup tool ran once and you can't remember what it was pointed at.</p>
+      <p>What you have now is three categories of file, thoroughly mixed together:</p>
+      <ul>
+        <li>Files that exist on both drives — genuinely redundant, and safe to reduce to one copy</li>
+        <li>Files that exist only on the newer drive</li>
+        <li>Files that exist <em>only</em> on the older drive, the one you were planning to wipe</li>
+      </ul>
+      <p>That third category is the reason this is dangerous. It is usually small, it is usually old, and it is the material you would never think to check for — a job from four years ago, a personal folder, the one shoot that never got copied forward because the drive disconnected halfway through. Deleting from the old drive what you <em>believe</em> is on the new one is how people lose the only copy of something.</p>
+    </div>
+
+    <div class="block">
+      <h2>Why the obvious methods don't answer it</h2>
+
+      <h3>Sorting both drives by name and comparing</h3>
+      <p>Folder names diverge immediately. <code>2019_Smith_Wedding</code> on one drive is <code>Smith Wedding (June)</code> on the other, because you reorganised at some point and only reorganised one of them. The photographs inside are identical. Sorted side by side, they don't line up at all — and two folders that <em>do</em> line up by name may hold different selects from the same shoot.</p>
+
+      <h3>Comparing dates</h3>
+      <p>Copying rewrites timestamps, and which timestamp it rewrites depends on how the copy was made. Dragging in File Explorer, robocopy with and without <code>/COPY:DAT</code>, and backup software all leave different date fingerprints on identical content. A file whose modified date is three years newer than its twin can still be the same photograph, byte for byte.</p>
+
+      <h3>Comparing folder sizes</h3>
+      <p>Size is an aggregate, so at best it tells you that something differs somewhere. It cannot name the file. And it produces false alarms of its own: Windows reports both <em>Size</em> and <em>Size on disk</em>, and the second depends on the cluster size of the filesystem. A drive formatted exFAT and a drive formatted NTFS will legitimately report different totals for identical content.</p>
+
+      <h3>Asking Windows to do it</h3>
+      <p>There's no facility in File Explorer for comparing two volumes. Nothing built into Windows answers the question "which files on E: also exist somewhere on F:" across a whole drive.</p>
+
+      <h3>Using a duplicate finder that scans one location</h3>
+      <p>This is the trap worth naming, because plenty of tools are built this way. They take a folder tree, find groups of identical files inside it, and offer to delete the extras. Point one at both drives at once and it may well be right about what's identical — but it has no concept of which drive you intend to keep, so its "keep one, delete the rest" logic can leave your only surviving copy on the drive you're about to wipe. Being correct about duplication is not the same as being correct about which copy survives.</p>
+    </div>
+
+    <div class="block">
+      <h2>What "identical" has to mean here</h2>
+      <p>Only one comparison is trustworthy across two drives: reading both files and checking whether their contents match. The difficulty is that doing that naively means reading every byte of two archives that might total twenty terabytes, which is a scan measured in days.</p>
+      <p>DuplicateFinder Pro runs three tests in order, cheapest first, and a file only reaches the next test if it survived the one before.</p>
+
+      <div class="split">
+        <div>
+          <h3>The three tests</h3>
+          <ul>
+            <li><strong>Size.</strong> Files of different sizes cannot be identical, so they are never read. This eliminates almost everything.</li>
+            <li><strong>Partial fingerprint.</strong> The first and last megabyte of each survivor is hashed. Anything differing near head or tail is separated without reading the middle.</li>
+            <li><strong>Full MD5.</strong> Whatever remains is read end to end. Only a full-content match is reported.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What is never used as evidence</h3>
+          <ul>
+            <li>A matching filename</li>
+            <li>A matching timestamp</li>
+            <li>A matching file size on its own</li>
+            <li>A matching folder structure</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="quiet" style="margin-top:26px;">One deliberate exception, which the app labels rather than hides: RAW files sharing a filename but not byte-identical are still grouped so you can see them side by side. Those rows read <code>stem+size</code> in the Match column instead of <code>md5</code>, and if the sizes differ by more than 5% they are marked <strong>Review</strong> rather than flagged. Every row tells you which test found it.</p>
+    </div>
+
+    <div class="block" id="order">
+      <h2>The safe order of operations</h2>
+      <p class="lead">This is the part most guides skip, and it matters more than which software you use.</p>
+      <p>The instinct is to compare the two drives in place, then delete the duplicates from the old one and wipe it. That works right up until the moment it doesn't, because it leaves the files that exist <em>only</em> on the old drive completely unexamined. A duplicate finder finds duplicates. Files with no counterpart aren't duplicates, so they never appear in the report — they are invisible precisely because they are the ones at risk.</p>
+
+      <h3>If the keeper drive has room: consolidate first, then deduplicate</h3>
+      <p>Copy everything from the old drive onto the new one. Don't merge folders, don't tidy — drop it in as a single dated folder and let it be untidy. Now every file you own is on one drive, including the ones that were only ever in one place. <em>Then</em> run the scan on that drive alone, and reduce the doubled files to one copy each. Nothing unique is ever exposed, because nothing unique was ever the only copy during the operation.</p>
+
+      <h3>If it doesn't have room: compare in place, but don't wipe</h3>
+      <p>Run the two-drive comparison, quarantine the redundant copies on the old drive, and let that free the space. Then copy what remains on the old drive — which is now, by definition, the material that exists nowhere else — onto the new one. Only after that has landed and been verified does the old drive get formatted.</p>
+      <p>In both routes the same rule holds: the drive you plan to retire is never the drive you delete from and then trust.</p>
+    </div>
+
+    <div class="block">
+      <h2>Comparing two drives, step by step</h2>
+      <p>Scanning and the full CSV and HTML reports work without a licence, so you can run all of this and see the result before deciding anything.</p>
+
+      <ol class="walk">
+        <li>
+          <strong>Connect both drives and let Windows finish mounting them</strong>
+          <span>Note the letters. If either drive spins up and down on idle, plug it into a powered hub rather than a bus-powered port — a drive that sleeps mid-scan turns a clean result into an interrupted one.</span>
+        </li>
+        <li>
+          <strong>Decide which drive is the keeper before you scan anything</strong>
+          <span>This decision is the whole answer, and the software will not make it for you. Choose the newer, larger, or healthier drive — whichever you intend to still be using next year.</span>
+        </li>
+        <li>
+          <strong>Add the keeper drive first, then the drive you're retiring</strong>
+          <span>Order is meaningful. The copy in the first-listed folder is the one kept; everything matching it in later folders is what gets flagged. Get this backwards and you'll flag the copies you meant to keep. You can add drive roots, not just folders, and as many as you have connected.</span>
+        </li>
+        <li>
+          <strong>Choose which file categories to scan</strong>
+          <span>RAW, JPG, video and GoPro audio are separate switches. On a multi-terabyte pair, running RAWs on one pass and video on another is usually more manageable than one overnight job — and lets you act on the first result while the second runs.</span>
+        </li>
+        <li>
+          <strong>Run the scan and leave it alone</strong>
+          <span>Progress is checkpointed at phase boundaries, so an interrupted scan resumes rather than restarting. If the window greys out, Windows is busy, not crashed — on a job this size that distinction is worth knowing in advance.</span>
+        </li>
+        <li>
+          <strong>Read the report before you move anything</strong>
+          <span>Every row names the file being kept and the file being flagged, in full, along with which of the three tests matched them. Export the CSV and keep it — it is your record of what the state of both drives was on the day you did this.</span>
+        </li>
+        <li>
+          <strong>Quarantine, don't delete</strong>
+          <span>Flagged files move to a quarantine folder on their own drive and are recorded. Nothing crosses between drives, and nothing is erased. Because it moves rather than copies, holding them costs no additional space.</span>
+        </li>
+        <li>
+          <strong>Use the 24 hours</strong>
+          <span>Open the archive in whatever you actually work in — Lightroom, Bridge, Explorer — and confirm it looks right before emptying quarantine. Restore is one click and stays available after the hold expires. The moment you regret a cleanup is usually the moment after it finishes.</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="block">
+      <h2>The parts that only bite on multi-drive jobs</h2>
+      <p>Most duplicate finders are written for one disk. These are the behaviours that only matter once a second drive is involved, and they're the reason this tool exists at all — it was written to consolidate a 25 TB archive spread across external drives.</p>
+
+      <h3>The same filename on three drives</h3>
+      <p><code>DSC_0001.NEF</code> exists on all of them and means something different each time. Identical basenames from different drives are given unique names in quarantine, and each keeps its own recorded origin, so a multi-drive cleanup can be undone one file at a time without ambiguity.</p>
+
+      <h3>Restoring when the origin drive isn't plugged in</h3>
+      <p>If a file's original location is on a drive that isn't currently connected, the app names that location, leaves the file safely in quarantine, and offers to continue with the rest. It will not redirect anything to a plausible-looking substitute path.</p>
+
+      <h3>Re-checking at the moment of the move</h3>
+      <p>On cross-folder and cross-drive matches, each flagged file is hashed against the copy you're keeping right as you click quarantine — not only when the scan ran, which on a multi-drive job may have been hours earlier. If a file changed in between, it is skipped and named.</p>
+
+      <h3>Scans that survive being interrupted</h3>
+      <p>Checkpointing at phase boundaries means a paused or interrupted multi-hour scan resumes: everything already finished stays finished, and only the phase in progress runs again. Over two drives, a scan that has to restart from zero is a scan that never completes.</p>
+    </div>
+
+    <div class="block">
+      <h2>Before you format the old drive</h2>
+      <p>Four things, in order. None of them takes long, and the drive isn't going anywhere.</p>
+      <ul>
+        <li>The CSV report is exported and saved somewhere that isn't either drive</li>
+        <li>Everything that existed only on the old drive has been copied to the keeper, and you have opened a few of those files to confirm they arrived</li>
+        <li>Your catalog — Lightroom, Capture One, Bridge — has been opened against the keeper drive and doesn't report missing files. <a href="/duplicate-finder-lightroom-catalog.html">What a deduplicator does to a catalog</a> is worth reading first if you work in Lightroom</li>
+        <li>You have lived with the result for a week</li>
+      </ul>
+      <p>Formatting is the one step here with no undo. Everything before it is reversible, and there's no prize for reaching the end quickly.</p>
+    </div>
+
+    <div class="block">
+      <h2>Questions</h2>
+      <div class="faq">
+        <div>
+          <h3>Do both drives have to be connected at the same time?</h3>
+          <p>Yes. The comparison reads files from both drives during the scan, so both need to be mounted and stay mounted. This is also why a drive that sleeps on idle is worth plugging into a powered hub first.</p>
+        </div>
+        <div>
+          <h3>Does it matter that the drives are different sizes or formatted differently?</h3>
+          <p>No. Content matching reads the files themselves, so cluster size, filesystem and capacity are irrelevant. A file copied from an exFAT drive to an NTFS one is the same file, and is recognised as such.</p>
+        </div>
+        <div>
+          <h3>Which copy gets kept?</h3>
+          <p>The one in the first-listed folder. You control that by the order in which you add the folders or drive roots, and the report names the surviving file explicitly on every row. The app never tries to guess which drive is your archive.</p>
+        </div>
+        <div>
+          <h3>What about files that exist only on the drive I'm retiring?</h3>
+          <p>They aren't duplicates, so they will not appear in the report — which is exactly why they are the risk. Copy the old drive's contents onto the keeper before deduplicating, or copy what remains after quarantine, but do not treat an empty report as evidence that a drive is safe to wipe.</p>
+        </div>
+        <div>
+          <h3>Can it handle a 12 TB drive?</h3>
+          <p>Yes. The staged tests mean most files are eliminated on size alone without being read, and scans are checkpointed so an interruption doesn't cost you the whole run. Scanning one file category at a time keeps individual passes shorter.</p>
+        </div>
+        <div>
+          <h3>Is anything deleted?</h3>
+          <p>No. Flagged files are moved to a quarantine folder on the same drive and recorded, with one-click restore to their exact original location. Emptying quarantine is a separate decision you make yourself, and restore and permanent delete are never locked behind the licence.</p>
+        </div>
+        <div>
+          <h3>Do I have to buy it to find out what's duplicated?</h3>
+          <p>No. Scanning, the Storage Map and the full CSV and HTML reports are free with no account. The $34 licence is only needed to move flagged files into quarantine.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h2>Run it on your own two drives</h2>
+      <p>The free scan tells you how much of the old drive is genuinely redundant before you commit to anything. If the answer turns out to be "less than I thought", that is a useful thing to learn while both drives still exist.</p>
+      <p style="margin-top:26px;">
+        <a class="btn btn-gold" href="/duplicatefinder-pro.html">See what it does &rarr;</a>
+        <a class="btn btn-ghost" href="/download.html" style="margin-left:10px;">Download and verify</a>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="wordmark" style="font-size:1.1rem;">ALMA<em>Z</em>E</p>
+        <p>Small-batch software, built out of real production
+           work — not written speculatively.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Tools</h4>
+          <a href="/duplicatefinder-pro.html">DuplicateFinder Pro</a>
+          <a href="/download.html">Download &amp; verify</a>
+        </div>
+        <div class="foot-col">
+          <h4>Guides</h4>
+          <a href="/verify-card-copy-before-formatting.html">Verify a card copy before formatting</a>
+          <a href="/duplicate-finder-lightroom-catalog.html">Duplicate finders and Lightroom</a>
+          <a href="/find-duplicate-photos-two-external-drives.html">Duplicates across two external drives</a>
+        </div>
+        <div class="foot-col">
+          <h4>Support</h4>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=enhancement" target="_blank" rel="noopener">Suggest a feature</a>
+          <a href="https://github.com/Fellh/almaze-tools/issues/new?labels=bug" target="_blank" rel="noopener">Report a bug</a>
+        </div>
+        <div class="foot-col">
+          <h4>Elsewhere</h4>
+          <a href="/origin-story.html">Why it exists</a>
+          <a href="mailto:support@almaze.tools">Email us</a>
+          <a href="https://github.com/Fellh/almaze-tools" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Almaze</span>
+      <span>Amharic for diamond.</span>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do both drives have to be connected at the same time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The comparison reads files from both drives during the scan, so both need to be mounted and stay mounted. This is also why a drive that sleeps on idle is worth plugging into a powered hub first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it matter that the drives are different sizes or formatted differently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Content matching reads the files themselves, so cluster size, filesystem and capacity are irrelevant. A file copied from an exFAT drive to an NTFS one is the same file, and is recognised as such."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which copy gets kept?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The one in the first-listed folder. You control that by the order in which you add the folders or drive roots, and the report names the surviving file explicitly on every row. The app never tries to guess which drive is your archive."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What about files that exist only on the drive I'm retiring?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They aren't duplicates, so they will not appear in the report \u2014 which is exactly why they are the risk. Copy the old drive's contents onto the keeper before deduplicating, or copy what remains after quarantine, but do not treat an empty report as evidence that a drive is safe to wipe."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can it handle a 12 TB drive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The staged tests mean most files are eliminated on size alone without being read, and scans are checkpointed so an interruption doesn't cost you the whole run. Scanning one file category at a time keeps individual passes shorter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is anything deleted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Flagged files are moved to a quarantine folder on the same drive and recorded, with one-click restore to their exact original location. Emptying quarantine is a separate decision you make yourself, and restore and permanent delete are never locked behind the licence."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to buy it to find out what's duplicated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Scanning, the Storage Map and the full CSV and HTML reports are free with no account. The $34 licence is only needed to move flagged files into quarantine."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to find duplicate photos across two external hard drives",
+  "description": "Compare two external drives by file content rather than by filename, date or folder size, so redundant copies can be removed without risking files that exist on only one of the drives.",
+  "totalTime": "PT2H",
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "DuplicateFinder Pro for Windows"
+    }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Connect both drives",
+      "text": "Mount both external drives and make sure neither is set to sleep on idle."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Decide which drive you are keeping",
+      "text": "Choose the drive that will remain your archive. This determines which copy of each duplicate survives."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Add the keeper drive first",
+      "text": "Add the keeper drive root first, then the drive being retired. The copy in the first-listed location is the one kept."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Select file categories and scan",
+      "text": "Choose RAW, JPG, video or GoPro audio and run the scan. Files are matched by size, then a partial fingerprint, then a full MD5 of the whole file."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Read the report",
+      "text": "Every row names the file kept and the file flagged, and which test matched them. Export the CSV before moving anything."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Quarantine rather than delete",
+      "text": "Flagged files are moved to a quarantine folder on their own drive with a 24-hour hold and one-click restore."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Copy across anything unique before formatting",
+      "text": "Files existing only on the retiring drive are not duplicates and never appear in the report. Copy them to the keeper drive and verify them before the old drive is formatted."
+    }
+  ]
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "94e8b447de704cce9bfb77ae229d62cb"}'></script>
+<!-- End Cloudflare Web Analytics -->
+
+</body>
+</html>
