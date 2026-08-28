@@ -73,7 +73,8 @@
   @media (max-width:640px){ .navlinks{ gap:18px; font-size:0.82rem; } }
 
   /* ── Article ──────────────────────────────────────────────── */
-  .article-head{ padding:88px 0 50px; text-align:center; }
+  /* Same shorthand issue as the other heroes: sides left to .wrap. */
+  .article-head{ padding-top:88px; padding-bottom:50px; text-align:center; }
   .article-head p.eyebrow{ margin-bottom:16px; }
   .article-head h1{
     font-size:clamp(2rem, 4.6vw, 2.9rem);

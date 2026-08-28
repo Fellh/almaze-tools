@@ -141,7 +141,11 @@
      Someone arriving from a search has a folder full of files and
      no idea whether it is safe to delete — that is the opening.
      ═══════════════════════════════════════════════════════════ */
-  .pp-hero{ padding:80px 0 0; }
+  /* padding-top only: the three-value shorthand used here previously
+     ("padding:80px 0 0") also set horizontal padding to 0, which
+     overrode .wrap and let the hero text run to the screen edge on
+     phones. Setting the sides is .wrap's job. */
+  .pp-hero{ padding-top:80px; padding-bottom:0; }
   .pp-hero h1{
     font-size:clamp(2.1rem, 5vw, 3.2rem);
     line-height:1.1; letter-spacing:-0.01em;

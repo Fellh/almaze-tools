@@ -112,7 +112,9 @@
      The homepage hero is centred and ceremonial. This page is a
      work surface, so it runs left-aligned and tighter.
      ═══════════════════════════════════════════════════════════ */
-  .dl-hero{ padding:76px 0 0; }
+  /* padding-top only — see note in duplicatefinder-pro.html. The
+     shorthand was zeroing out .wrap's horizontal padding. */
+  .dl-hero{ padding-top:76px; padding-bottom:0; }
   .dl-hero h1{
     font-size:clamp(2rem, 4.6vw, 3rem);
     line-height:1.12; letter-spacing:-0.01em;
