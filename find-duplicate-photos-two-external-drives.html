@@ -220,6 +220,9 @@
   .backup-warn strong.t{ display:block; color:var(--gold-soft); font-size:1.05rem; margin-bottom:6px; }
   .backup-warn p{ margin:0; color:var(--ink); font-size:0.97rem; line-height:1.55; }
   .backup-warn a{ color:var(--gold-soft); }
+  .quick-steps{ margin:14px 0 16px; padding-left:1.4em; }
+  .quick-steps li{ margin:6px 0; line-height:1.55; }
+  .quick-steps em{ font-style:normal; font-weight:600; color:var(--gold-soft); }
 </style>
 </head>
 <body>
@@ -241,9 +244,16 @@
   <h1>How do I find duplicate photos across <em>two</em> external drives?</h1>
 
   <div class="answer">
-    <p><strong>Short answer: you cannot work this out by looking. Folder names, file dates and directory structures diverged the moment you started copying between the drives. The only question that survives all of that is whether the contents match — and it has to be asked across both drives at once.</strong></p>
-    <p>Scanning both drives and exporting the full report is free, with no account. A licence is only needed to move anything.</p>
-    <p>There is also an order of operations that makes this safe, and it isn't the obvious one. It's further down, under <a href="#order">the safe order</a>. Read that part even if you use something other than our software.</p>
+    <p><strong>Short answer: with the Folder Duplicates tab. It&rsquo;s the part of DuplicateFinder Pro built for comparing separate drives or folders against each other.</strong></p>
+    <ol class="quick-steps">
+      <li>Open DuplicateFinder Pro and click the <em>Folder Duplicates</em> tab.</li>
+      <li>Click <em>+ Add Folder / Drive&hellip;</em> and choose the drive you&rsquo;re keeping. The first one listed is the one whose copies are kept.</li>
+      <li>Click <em>+ Add Folder / Drive&hellip;</em> again and choose the drive you suspect holds copies of the same files.</li>
+      <li>Add a third or fourth drive if you need to.</li>
+      <li>Click <em>Scan for Duplicate Files</em>.</li>
+    </ol>
+    <p>Every file is compared by what&rsquo;s inside it, whatever its name, folder or date. A big scan can take several hours, depending on how large the drives are and how many you add. If it&rsquo;s interrupted, it picks up where it left off.</p>
+    <p>Scanning and the full report are free, with no account. A licence is only needed to move anything. Before you move anything, read <a href="#order">the safe order</a> further down.</p>
   </div>
   <div class="backup-warn" role="note">
     <strong class="t">&#9888; Is one of your drives a backup? Then those copies are not clutter.</strong>
