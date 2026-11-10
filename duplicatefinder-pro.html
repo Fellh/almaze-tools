@@ -293,7 +293,7 @@
   <p class="eyebrow">DuplicateFinder Pro · Windows</p>
   <h1>Find duplicate photos, RAW files and videos across two drives</h1>
   <p class="deck">The same photos are on <em>both</em> drives. Which ones?</p>
-  <p class="lede">Open the <strong>Folder Duplicates</strong> tab, built for exactly this, and point it at two folders — or two entire drives. It tells you which files are genuinely identical inside, byte for byte, no matter what either folder is named or when it was copied. Then it moves the extra copies to quarantine, where you have 24 hours and one click to change your mind.</p>
+  <p class="lede">DuplicateFinder Pro — <strong>DFP</strong> for short — has a <strong>Folder Duplicates</strong> tab built for exactly this. Point it at two folders, or two entire drives, and it tells you which files are genuinely identical inside, byte for byte, no matter what either folder is named or when it was copied. Then it moves the extra copies to quarantine, where you have 24 hours and one click to change your mind.</p>
   <div class="cta-row">
     <a class="btn btn-gold" href="/download.html">Scan your archive free →</a>
     <a class="btn btn-ghost" href="https://almaze7.gumroad.com/l/duplicatefinder-pro/FOUNDING34" target="_blank" rel="noopener">Buy — $34 one-time</a>
@@ -360,7 +360,7 @@
 
     <div class="panel">
       <h2>Nothing is deleted</h2>
-      <p class="sub">Flagged files are moved to a quarantine folder on the same drive, never erased. The 24-hour hold exists because the moment you regret a cleanup is usually the moment after it finishes.</p>
+      <p class="sub">Flagged files are moved, never erased, into a folder DFP creates for the purpose: <code>_DuplicateFinder_Quarantine</code>, inside the folder you scanned. Scan <code>F:\</code> and they go to <code>F:\_DuplicateFinder_Quarantine</code>; scan <code>F:\Photos</code> and they go to <code>F:\Photos\_DuplicateFinder_Quarantine</code>. In Folder Duplicates, each drive gets its own, inside the folder you added from that drive, so nothing ever crosses from one drive to another. The 24-hour hold exists because the moment you regret a cleanup is usually the moment after it finishes.</p>
 
       <ul class="limits">
         <li>
@@ -369,7 +369,7 @@
         </li>
         <li>
           <strong>The safety net costs no disk space</strong>
-          <span>Quarantine moves files, it does not copy them — so holding them for 24 hours uses no additional space on your drive. The trade is the honest one: the space isn't reclaimed either until you permanently delete. You get the undo window for free, and choose when to cash in the space.</span>
+          <span>On the same drive, a move is only a change of address: Windows renames the file's location, and not a single byte is copied. That is why it is instant even for large videos, and why it takes no extra space. The trade is the honest one: the space isn't reclaimed either until you permanently delete. You get the undo window for free, and decide when to reclaim the space.</span>
         </li>
         <li>
           <strong>Restore never guesses</strong>
@@ -381,7 +381,7 @@
         </li>
         <li>
           <strong>System and catalog working folders are never scanned</strong>
-          <span>Windows, Program Files, the Recycle Bin, Adobe Premiere Pro's working folders, and Lightroom's <code>.lrdata</code> and <code>.cache</code> directories are excluded outright. You can add your own exclusions and save them as reusable profiles.</span>
+          <span>In both the main scan and Folder Duplicates: Windows, Program Files, the Recycle Bin, Windows File History backups, Adobe Premiere Pro's working folders, and Lightroom's <code>.lrdata</code> and <code>.cache</code> directories are excluded outright. You can add your own exclusions under <em>Settings &amp; Profiles</em> and save them as reusable profiles; Folder Duplicates respects them too.</span>
         </li>
         <li>
           <strong>Permanent delete and restore are never locked</strong>
@@ -391,25 +391,25 @@
     </div>
 
     <div class="panel">
-      <h2>What it doesn't do</h2>
+      <h2>What DFP doesn't do</h2>
       <p class="sub">A duplicate finder is asking you to trust it with your archive. Here is where the tool stops, stated plainly, so nothing on this page is a surprise after you buy.</p>
 
       <ul class="limits">
         <li>
-          <strong>It doesn't read your Lightroom or Capture One catalog</strong>
-          <span>Lightroom's working folders are excluded from scanning, but the app has no knowledge of which photos are catalogued. If you quarantine a photo Lightroom has catalogued, Lightroom will show it as missing until you restore it — which takes one click, within the 24-hour hold or after. Catalog awareness is planned, not shipped. <a href="/duplicate-finder-lightroom-catalog.html" style="color:var(--ice);">What this means for your catalog in practice &rarr;</a></span>
+          <strong>DFP doesn't read your Lightroom or Capture One catalog</strong>
+          <span>Lightroom's working folders are excluded from scanning, but DFP has no knowledge of which photos are catalogued. If you quarantine a photo Lightroom has catalogued, Lightroom will show it as missing until you restore it — which takes one click, within the 24-hour hold or after. Catalog awareness is planned, not shipped. <a href="/duplicate-finder-lightroom-catalog.html" style="color:var(--ice);">What this means for your catalog in practice &rarr;</a></span>
         </li>
         <li>
-          <strong>It doesn't guess which folder is the camera dump</strong>
+          <strong>DFP doesn't guess which folder is the camera dump</strong>
           <span>You add the folders to compare, in the order you want them ranked — the copy in the first-listed folder is the one kept. That's a deliberate reversal of an earlier version that tried to detect dump folders by naming convention and silently found nothing when your names didn't match its expectations.</span>
         </li>
         <li>
           <strong>Cross-folder RAW+JPG pairing tolerates resizing, not heavy cropping</strong>
-          <span>Pairing a RAW with its exported JPG in a different folder uses a perceptual hash with an adjustable threshold, which handles resized and re-compressed exports well. A significantly cropped export may hash differently enough to be missed. Every other kind of duplicate detection in the app is full-content matching only.</span>
+          <span>Pairing a RAW with its exported JPG in a different folder uses a perceptual hash with an adjustable threshold, which handles resized and re-compressed exports well. A significantly cropped export may hash differently enough to be missed. Every other kind of duplicate detection in DFP is full-content matching only.</span>
         </li>
         <li>
-          <strong>It only looks at photo, video and audio files</strong>
-          <span>RAW photos, exported JPGs, .MOV and .MP4 video, and GoPro .WAV audio. Documents, archives, installers and everything else on the drive are ignored, so this is not a general-purpose duplicate file cleaner — it is built for the one archive where a wrong deletion is unrecoverable.</span>
+          <strong>The main scan only looks at photo, video and audio files</strong>
+          <span>RAW photos, exported JPGs, .MOV and .MP4 video, and GoPro .WAV audio. Documents, archives, installers and everything else on the drive are ignored there, so DFP is not a general-purpose duplicate file cleaner — it is built for the one archive where a wrong deletion is unrecoverable. Folder Duplicates is the exception: to tell you whether two folders really hold the same things, it compares every file in them, sidecars and project files included.</span>
         </li>
         <li>
           <strong>Windows only, and not code-signed yet</strong>
