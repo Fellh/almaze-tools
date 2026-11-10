@@ -266,6 +266,13 @@
     *{ transition:none !important; }
     .btn:hover{ transform:none; }
   }
+  /* Backup warning: shown up top, not only in the FAQ (Nov 10) */
+  .backup-warn{ margin:28px 0 0; padding:18px 22px; max-width:70ch;
+    border:1px solid var(--gold); border-left:6px solid var(--gold);
+    border-radius:6px; background:rgba(201,162,39,0.10); }
+  .backup-warn strong.t{ display:block; color:var(--gold-soft); font-size:1.05rem; margin-bottom:6px; }
+  .backup-warn p{ margin:0; color:var(--ink); font-size:0.97rem; line-height:1.55; }
+  .backup-warn a{ color:var(--gold-soft); }
 </style>
 </head>
 <body>
@@ -292,6 +299,10 @@
     <a class="btn btn-ghost" href="https://almaze7.gumroad.com/l/duplicatefinder-pro/FOUNDING34" target="_blank" rel="noopener">Buy — $34 one-time</a>
   </div>
   <p class="cta-note">Scanning and the full CSV and HTML reports are free, with no account. A licence is only needed to move files into quarantine.</p>
+  <div class="backup-warn" role="note">
+    <strong class="t">&#9888; Is one of your drives a backup? Then those copies are not clutter.</strong>
+    <p>A backup on a separate drive is your safety net. Quarantine only from the drive you mean to tidy, and never leave yourself with a single copy. The safe rule is three copies, on two kinds of storage, one kept somewhere else. The copies worth removing are the accidental ones piling up on the same drive. <a href="/duplicatefinder-pro.html#backups">How to use it safely with backups &rarr;</a></p>
+  </div>
 </header>
 
 <section>
@@ -445,7 +456,7 @@
       <p class="quiet" style="margin-top:22px;">Each category is a separate switch in the app, so you can scan RAWs alone on one pass and video alone on another — useful when a full pass over a multi-terabyte drive would run overnight.</p>
 
       <dl class="specs">
-        <div class="spec"><dt>Version</dt><dd>1.5</dd></div>
+        <div class="spec"><dt>Version</dt><dd>1.6</dd></div>
         <div class="spec"><dt>Runs on</dt><dd>Windows 10 / 11</dd></div>
         <div class="spec"><dt>Licence</dt><dd>One-time purchase</dd></div>
         <div class="spec"><dt>After activation</dt><dd>Works offline</dd></div>
@@ -502,7 +513,7 @@
           <h3>What happens to a file I quarantine?</h3>
           <p>It is moved to a quarantine folder on the same drive and recorded, not deleted. For 24 hours it can be restored with one click to its exact original location. Nothing is ever removed from your drive without you choosing to empty quarantine yourself.</p>
         </div>
-        <div>
+        <div id="backups">
           <h3>I keep copies of my photos on several drives on purpose. Won&rsquo;t this remove my backups?</h3>
           <p>Keep your backups &mdash; they&rsquo;re the right idea. The rule photographers trust is 3-2-1: three copies of your photos, on two different kinds of storage, with one copy somewhere else (another building, or the cloud). DuplicateFinder Pro isn&rsquo;t there to undo that.</p>
           <p style="margin-top:10px;">It&rsquo;s for a different kind of copy: the one that piles up <em>inside</em> your library by accident &mdash; a card copied in twice, a folder dragged over again, an export saved in three places. Those copies don&rsquo;t protect you. They sit on the same drive, so if that drive fails they all go with it. A spare house key with your neighbour is a backup; five in the same kitchen drawer is clutter. If the house burns down, all five are gone.</p>
@@ -570,7 +581,7 @@
   "applicationCategory": "UtilitiesApplication",
   "applicationSubCategory": "Duplicate file finder",
   "operatingSystem": "Windows 10, Windows 11",
-  "softwareVersion": "1.5",
+  "softwareVersion": "1.6",
   "datePublished": "2026-08-09",
   "url": "https://almaze.tools/duplicatefinder-pro.html",
   "downloadUrl": "https://almaze.tools/download.html",

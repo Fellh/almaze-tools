@@ -213,6 +213,13 @@
     color:var(--ink); line-height:1.7; white-space:pre;
   }
   @media (max-width:640px){ pre.code{ padding:16px; } pre.code code{ font-size:0.74rem; } }
+  /* Backup warning: shown up top, not only in the FAQ (Nov 10) */
+  .backup-warn{ margin:28px 0 0; padding:18px 22px; max-width:70ch;
+    border:1px solid var(--gold); border-left:6px solid var(--gold);
+    border-radius:6px; background:rgba(201,162,39,0.10); }
+  .backup-warn strong.t{ display:block; color:var(--gold-soft); font-size:1.05rem; margin-bottom:6px; }
+  .backup-warn p{ margin:0; color:var(--ink); font-size:0.97rem; line-height:1.55; }
+  .backup-warn a{ color:var(--gold-soft); }
 </style>
 </head>
 <body>
@@ -237,6 +244,10 @@
     <p><strong>Short answer: you cannot work this out by looking. Folder names, file dates and directory structures diverged the moment you started copying between the drives. The only question that survives all of that is whether the contents match — and it has to be asked across both drives at once.</strong></p>
     <p>Scanning both drives and exporting the full report is free, with no account. A licence is only needed to move anything.</p>
     <p>There is also an order of operations that makes this safe, and it isn't the obvious one. It's further down, under <a href="#order">the safe order</a>. Read that part even if you use something other than our software.</p>
+  </div>
+  <div class="backup-warn" role="note">
+    <strong class="t">&#9888; Is one of your drives a backup? Then those copies are not clutter.</strong>
+    <p>A backup on a separate drive is your safety net. Quarantine only from the drive you mean to tidy, and never leave yourself with a single copy. The safe rule is three copies, on two kinds of storage, one kept somewhere else. The copies worth removing are the accidental ones piling up on the same drive. <a href="/duplicatefinder-pro.html#backups">How to use it safely with backups &rarr;</a></p>
   </div>
 </header>
 
